@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: spotweb
+  annotations:
+#    nginx.ingress.kubernetes.io/base-url-scheme: "https"
+#    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+#    kubernetes.io/tls-acme: "true"
+spec:
+#  tls:
+#  - hosts:
+#    - spotweb.explorer
+#    secretName: spotweb-cert
+  rules:
+  - host: spotweb.explorer
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: spotweb
+          servicePort: 80

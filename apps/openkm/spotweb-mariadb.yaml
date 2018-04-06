@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: spotweb-v0
+  labels:
+    app: spotweb
+    version: v0
+spec:
+  replicas: 1
+  selector:
+    app: spotweb
+    version: v0
+  template:
+    metadata:
+      labels:
+        app: spotweb
+        version: v0
+    spec:
+      containers:
+      - name: mysql
+        image: mariadb:10.2
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: 6GRwVZINLRS6PMiZNVbO
+        - name: MYSQL_USER
+          value: spotweb
+        - name: MYSQL_PASSWORD
+          value: spotweb
+        - name: MYSQL_DATABASE
+          value: spotweb
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        imagePullPolicy: Always
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mariadb-spotweb
+
