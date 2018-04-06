@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: subversion
+  annotations:
+#     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+     certmanager.k8s.io/issuer: ca-kubernetes-issuer
+#     kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - subversion.explorer
+    secretName: subversion-cert
+  rules:
+  - host: subversion.explorer
+    http:
+      paths:
+      - path: /csvn
+        backend:
+          serviceName: subversion-csvn
+          servicePort: 3343
+      - path: /svn
+        backend:
+          serviceName: subversion-svn
+          servicePort: 18080
+      - path: /viewvc
+        backend:
+          serviceName: subversion-svn
+          servicePort: 18080

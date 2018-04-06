@@ -1,0 +1,12 @@
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: jenkins
+  spec:
+    capacity:
+      storage: 8Gi
+    accessModes:
+      - ReadWriteOnce
+    nfs:
+      path: /data/kubernetes/jenkins
+      server: 192.168.2.44

@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: serviio-v0
+  labels:
+    app: serviio
+    version: v0
+spec:
+  replicas: 1
+  selector:
+    app: serviio
+    version: v0
+  template:
+    metadata:
+      labels:
+        app: serviio
+        version: v0
+    spec:
+      securityContext:
+        runAsUser: 0
+        fsGroup: 0
+      hostNetwork: true
+      containers:
+      - name: serviio
+        image: lsiocommunity/serviio:84
+        env:
+        - name: TZ
+          value: "Europe/Amsterdam"
+        - name: PGID
+          value: "10"
+        - name: PUID
+          value: "200"
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+        ports:
+        - containerPort: 23423
+          name: serviio
+        volumeMounts:
+        - name: serviio-config
+          mountPath: /config
+        - name: serviio-movies
+          mountPath: /media/video
+        - name: serviio-pictures
+          mountPath: /media/pictures
+        - name: serviio-transcode
+          mountPath: /transcode
+        imagePullPolicy: Always
+      volumes:
+      - name: serviio-config
+        persistentVolumeClaim:
+          claimName: serviio-config
+      - name: serviio-movies
+        persistentVolumeClaim:
+          claimName: lib-movies
+      - name: serviio-pictures
+        persistentVolumeClaim:
+          claimName: lib-pictures
+      - name: serviio-transcode
+        persistentVolumeClaim:
+          claimName: transcode

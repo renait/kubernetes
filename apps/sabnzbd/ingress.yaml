@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sabnzbd
+  annotations:
+#     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+     certmanager.k8s.io/issuer: ca-kubernetes-issuer
+#     kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - sabnzbd.explorer
+    secretName: sabnzbd-cert
+  rules:
+  - host: sabnzbd.explorer
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sabnzbd
+          servicePort: 8080

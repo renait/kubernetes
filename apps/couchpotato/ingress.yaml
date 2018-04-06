@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: couchpotato
+  annotations:
+#     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+     certmanager.k8s.io/issuer: ca-kubernetes-issuer
+#     kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - couchpotato.explorer
+    secretName: couchpotato-cert
+  rules:
+  - host: couchpotato.explorer
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: couchpotato
+          servicePort: 5050

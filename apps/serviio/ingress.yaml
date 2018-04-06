@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: serviio
+  annotations:
+#     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+     certmanager.k8s.io/issuer: ca-kubernetes-issuer
+#     kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - serviio.explorer
+    secretName: serviio-cert
+  rules:
+  - host: serviio.explorer
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: serviio-cons
+          servicePort: 23423
+      - path: /mediabrowser
+        backend:
+          serviceName: serviio-mb
+          servicePort: 23424
+      - path: /cds
+        backend:
+          serviceName: serviio-mb
+          servicePort: 23424

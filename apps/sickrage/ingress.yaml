@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sickrage
+  annotations:
+#     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+     certmanager.k8s.io/issuer: ca-kubernetes-issuer
+#     kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - sickrage.explorer
+    secretName: sickrage-cert
+  rules:
+  - host: sickrage.explorer
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sickrage
+          servicePort: 8081

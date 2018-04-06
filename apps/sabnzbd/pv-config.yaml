@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sabnzbd-config
+  labels:
+    app: sabnzbd
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/kubernetes/sabnzbd-config
+    server: 192.168.2.44

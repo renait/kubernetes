@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins
+  annotations:
+    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - jenkins.explorer
+    secretName: jenkins-cert
+  rules:
+  - host: jenkins.explorer
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: jenkins
+          servicePort: 80
