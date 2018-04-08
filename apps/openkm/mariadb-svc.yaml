@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openkm-mariadb
+  labels:
+    app: openkm
+    kubernetes.io/name: "openkm"
+spec:
+  selector:
+    app: openkm
+  ports:
+  - name: openkm
+    port: 3306
+    targetPort: 3306
+  type: ClusterIP

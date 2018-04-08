@@ -38,5 +38,5 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mariadb-spotweb
+          claimName: spotweb-mariadb
 

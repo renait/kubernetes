@@ -1,21 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: spotweb
+  name: openkm
   annotations:
 #    nginx.ingress.kubernetes.io/base-url-scheme: "https"
-#    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    certmanager.k8s.io/issuer: ca-kubernetes-issuer
 #    kubernetes.io/tls-acme: "true"
 spec:
-#  tls:
-#  - hosts:
-#    - spotweb.explorer
-#    secretName: spotweb-cert
+  tls:
+  - hosts:
+    - openkm.explorer
+    secretName: openkm-cert
   rules:
-  - host: spotweb.explorer
+  - host: openkm.explorer
     http:
       paths:
       - path: /
         backend:
-          serviceName: spotweb
-          servicePort: 80
+          serviceName: openkm
+          servicePort: 8080

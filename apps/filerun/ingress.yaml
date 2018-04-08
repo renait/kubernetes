@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: filerun
+  annotations:
+#    nginx.ingress.kubernetes.io/base-url-scheme: "https"
+    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+#    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - filerun.explorer
+    secretName: filerun-cert
+  rules:
+  - host: filerun.explorer
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: filerun
+          servicePort: 80

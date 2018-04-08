@@ -28,6 +28,8 @@ spec:
           value: Zq59o7j21NWWg2cBXIdJ
         - name: MYSQL_DATABASE
           value: spotweb
+        - name: TZ
+          value: "Europe/Amsterdam"
         ports:
         - containerPort: 3306
           name: mysql
@@ -54,6 +56,6 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mariadb-spotweb
+          claimName: spotweb-mariadb
 
 
