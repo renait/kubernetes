@@ -16,6 +16,7 @@ spec:
         app: filerun
         version: v0
     spec:
+      hostname: filerun
       containers:
       - name: filerun-mariadb
         image: mariadb:10.2
@@ -37,10 +38,18 @@ spec:
         - name: mariadb-persistent-storage
           mountPath: /var/lib/mysql
       - name: filerun
-        image: afian/filerun
+        image: renait/filerun
         env:
         - name: TZ
           value: "Europe/Amsterdam"
+        - name: DB_HOST
+          value: filerun
+        - name: DB_NAME
+          value: filerun
+        - name: DB_USER
+          value: filerun
+        - name: DB_PASS
+          value: LcLWqeKRYaY8DMRu
         resources:
           limits:
             cpu: "1000m"
