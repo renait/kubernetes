@@ -4,6 +4,7 @@ metadata:
   name: filerun
   annotations:
 #    nginx.ingress.kubernetes.io/base-url-scheme: "https"
+    nginx.ingress.kubernetes.io/client_max_body_size: "4096m"
     certmanager.k8s.io/issuer: ca-kubernetes-issuer
 #    kubernetes.io/tls-acme: "true"
 spec:

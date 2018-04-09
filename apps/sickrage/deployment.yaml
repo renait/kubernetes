@@ -1,24 +1,25 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: couchpotato-v0
+  name: sickrage
   labels:
-    app: couchpotato
+    app: sickrage
     version: v0
 spec:
   replicas: 1
   selector:
-    app: couchpotato
-    version: v0
+    matchLabels:
+      app: sickrage
+      version: v0
   template:
     metadata:
       labels:
-        app: couchpotato
+        app: sickrage
         version: v0
     spec:
       containers:
-      - name: couchpotato
-        image: linuxserver/couchpotato
+      - name: sickrage
+        image: linuxserver/sickrage
         env:
         - name: TZ
           value: "Europe/Amsterdam"
@@ -27,28 +28,31 @@ spec:
         - name: PUID
           value: "200"
         resources:
+          limits:
+            cpu: "800m"
+            memory: "512Mi"
           requests:
-            cpu: "200m"
+            cpu: "500m"
             memory: "256Mi"
         ports:
-        - containerPort: 5050
-          name: couchpotato
+        - containerPort: 8081
+          name: sickrage-http
         volumeMounts:
-        - name: couchpotato-config
+        - name: sickrage-config
           mountPath: /config
-        - name: couchpotato-download
-          mountPath: /mnt
-        - name: couchpotato-movies
-          mountPath: /movies
+        - name: sickrage-download
+          mountPath: /downloads
+        - name: sickrage-tv
+          mountPath: /tv
         imagePullPolicy: Always
       volumes:
-      - name: couchpotato-config
+      - name: sickrage-config
         persistentVolumeClaim:
-          claimName: couchpotato-config
-      - name: couchpotato-download
+          claimName: sickrage-config
+      - name: sickrage-download
         persistentVolumeClaim:
           claimName: sabnzbd-download
-      - name: couchpotato-movies
+      - name: sickrage-tv
         persistentVolumeClaim:
           claimName: lib-movies
 

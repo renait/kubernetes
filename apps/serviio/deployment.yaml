@@ -1,15 +1,16 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: serviio-v0
+  name: serviio
   labels:
     app: serviio
     version: v0
 spec:
   replicas: 1
   selector:
-    app: serviio
-    version: v0
+    matchLabels:
+      app: serviio
+      version: v0
   template:
     metadata:
       labels:
