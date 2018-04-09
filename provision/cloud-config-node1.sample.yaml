@@ -1,0 +1,22 @@
+#cloud-config
+
+ssh_authorized_keys:
+  - "ssh-rsa ..."
+
+users:
+- name: root
+  ssh_authorized_keys:
+    - "ssh-rsa ..."
+
+coreos:
+  units:
+    - name: 10-static.network
+      content: |
+        [Match]
+        Name=ens224
+
+        [Network]
+        Address=172.16.0.90/24
+
+        [Link]
+        MTUBytes=9000

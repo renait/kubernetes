@@ -1,0 +1,69 @@
+{
+    "DiskProvisioning": "thin",
+    "IPAllocationPolicy": "dhcpPolicy",
+    "IPProtocol": "IPv4",
+    "InjectOvfEnv": true,
+    "Name": "k8s-node1",
+    "NetworkMapping": [
+        {
+            "Name": "VM Network",
+            "Network": "LAN"
+        }
+    ],
+    "PowerOn": false,
+    "PropertyMapping": [
+        {
+            "Key": "guestinfo.hostname",
+            "Value": "k8s-node1"
+        },
+        {
+            "Key": "guestinfo.coreos.config.data",
+            "Value": "<result from base64encode.sh 1.sample>"
+        },
+        {
+            "Key": "guestinfo.coreos.config.url",
+            "Value": ""
+        },
+        {
+            "Key": "guestinfo.coreos.config.data.encoding",
+            "Value": "base64"
+        },
+        {
+            "Key": "guestinfo.interface.0.name",
+            "Value": "ens192"
+        },
+        {
+            "Key": "guestinfo.interface.0.mac",
+            "Value": ""
+        },
+        {
+            "Key": "guestinfo.interface.0.dhcp",
+            "Value": "no"
+        },
+        {
+            "Key": "guestinfo.interface.0.role",
+            "Value": "public"
+        },
+        {
+            "Key": "guestinfo.interface.0.ip.0.address",
+            "Value": "192.168.2.90/24"
+        },
+        {
+            "Key": "guestinfo.interface.0.route.0.gateway",
+            "Value": "192.168.2.1"
+        },
+        {
+            "Key": "guestinfo.interface.0.route.0.destination",
+            "Value": "0.0.0.0/0"
+        },
+        {
+            "Key": "guestinfo.dns.server.0",
+            "Value": "192.168.2.1"
+        },
+        {
+            "Key": "guestinfo.dns.server.1",
+            "Value": ""
+        }
+    ],
+    "WaitForIP": false
+}
