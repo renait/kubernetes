@@ -1,0 +1,62 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "couchpotato.fullname" . }}
+  labels:
+    app: {{ template "couchpotato.name" . }}
+    chart: {{ template "couchpotato.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "couchpotato.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "couchpotato.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+{{ toYaml .Values.env | indent 12 }}
+          ports:
+            - name: http
+              containerPort: 5050
+              protocol: TCP
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+          - name: couchpotato-config
+            mountPath: /config
+          - name: couchpotato-download
+            mountPath: /mnt
+          - name: couchpotato-movies
+            mountPath: /movies
+      volumes:
+      - name: couchpotato-config
+        persistentVolumeClaim:
+          claimName: couchpotato-config
+      - name: couchpotato-download
+        persistentVolumeClaim:
+          claimName: sabnzbd-download
+      - name: couchpotato-movies
+        persistentVolumeClaim:
+          claimName: lib-movies
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

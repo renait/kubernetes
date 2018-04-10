@@ -1,17 +1,17 @@
-# Default values for sabnzbd.
+# Default values for couchpotato.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: linuxserver/sabnzbd
+  repository: linuxserver/couchpotato
   tag: latest
   pullPolicy: Always
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 5050
 
 ingress:
   enabled: true
@@ -21,11 +21,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - sabnzbd.explorer
+    - couchpotato.explorer
   tls:
-    - secretName: sabnzbd-tls
+    - secretName: couchpotato-tls
       hosts:
-        - sabnzbd.explorer
+        - couchpotato.explorer
 
 env:
   - name: TZ
@@ -41,8 +41,8 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: 1000m
-    memory: 756Mi
+    cpu: 200m
+    memory: 256Mi
   requests:
     cpu: 200m
     memory: 128Mi
