@@ -37,7 +37,12 @@ spec:
         - containerPort: 3306
           name: mysql
         resources:
-{{ toYaml .Values.resources | indent 10 }}
+          limits:
+            cpu: 200m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 128Mi
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
@@ -55,14 +60,6 @@ spec:
         - name: http
           containerPort: 80
           protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /
-            port: http
-        readinessProbe:
-          httpGet:
-            path: /
-            port: http
         resources:
 {{ toYaml .Values.resources | indent 10 }}
       volumes:

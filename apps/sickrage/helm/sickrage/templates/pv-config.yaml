@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "sickrage.fullname" . }}-config
+  labels:
+    app: {{ template "sickrage.name" . }}
+    chart: {{ template "sickrage.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/kubernetes/sickrage-config
+    server: 192.168.2.44
