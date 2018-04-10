@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "sabnzbd.fullname" . }}-config
+  labels:
+    app: {{ template "sabnzbd.name" . }}
+    chart: {{ template "sabnzbd.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+
+

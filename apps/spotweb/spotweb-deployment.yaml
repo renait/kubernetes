@@ -48,8 +48,8 @@ spec:
           value: "Zq59o7j21NWWg2cBXIdJ"
         resources:
           requests:
-            cpu: "200m"
-            memory: "256Mi"
+            cpu: "100m"
+            memory: "128Mi"
         ports:
         - containerPort: 80
           name: spotweb
