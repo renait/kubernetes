@@ -1,0 +1,56 @@
+# Default values for plex.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: linuxserver/plex
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 32400
+
+ingress:
+  enabled: true
+  annotations:
+    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - plex.explorer
+  tls:
+    - secretName: plex-tls
+      hosts:
+        - plex.explorer
+
+env:
+  - name: TZ
+    value: "Europe/Amsterdam"
+  - name: PGID
+    value: "10"
+  - name: PUID
+    value: "200"
+  - name: VERSION
+    value: "public"
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 1000m
+    memory: 2048Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

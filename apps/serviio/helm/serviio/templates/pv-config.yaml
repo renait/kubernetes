@@ -9,7 +9,7 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   capacity:
-    storage: 100Mi
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   nfs:

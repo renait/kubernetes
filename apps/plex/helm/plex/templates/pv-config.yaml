@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "plex.fullname" . }}-config
+  labels:
+    app: {{ template "plex.name" . }}
+    chart: {{ template "plex.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/kubernetes/plex-config
+    server: 172.16.0.10
