@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "filerun.fullname" . }}-user-files
+  labels:
+    app: {{ template "filerun.name" . }}
+    chart: {{ template "filerun.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "filerun.fullname" . }}-html
+  labels:
+    app: {{ template "filerun.name" . }}
+    chart: {{ template "filerun.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "filerun.fullname" . }}-mariadb
+  labels:
+    app: {{ template "filerun.name" . }}
+    chart: {{ template "filerun.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

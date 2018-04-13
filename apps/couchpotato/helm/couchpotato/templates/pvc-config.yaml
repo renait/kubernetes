@@ -1,9 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: couchpotato-config
+  name: {{ template "couchpotato.fullname" . }}-config
   labels:
-    app: couchpotato
+    app: {{ template "couchpotato.name" . }}
+    chart: {{ template "couchpotato.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   accessModes:
     - ReadWriteOnce
