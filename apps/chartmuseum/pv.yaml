@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: chartmuseum
+  labels:
+    app: chartmuseum
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/kubernetes/chartmuseum
+    server: 172.16.0.10
