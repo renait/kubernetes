@@ -46,7 +46,7 @@ kube_users:
 
 ## It is possible to activate / deactivate selected authentication methods (basic auth, static token auth)
 #kube_oidc_auth: false
-#kube_basic_auth: false
+kube_basic_auth: true
 #kube_token_auth: false
 
 
@@ -160,16 +160,16 @@ k8s_image_pull_policy: IfNotPresent
 dashboard_enabled: true
 
 # Monitoring apps for k8s
-efk_enabled: true
+efk_enabled: false
 
 # Helm deployment. Needs for Prometheus Operator, k8s metrics.
 helm_enabled: true
 
 # Prometheus Operator. Needs for k8s metrics. Installed Helm is required.
-prometheus_operator_enabled: true
+prometheus_operator_enabled: false
 
 # K8s cluster metrics. Installed Helm and Prometheus Operator are required.
-k8s_metrics_enabled: true
+k8s_metrics_enabled: false
 
 # Istio deployment
 istio_enabled: false
@@ -214,7 +214,7 @@ ingress_nginx_enabled: true
 #   53: "kube-system/kube-dns:53"
 
 # Cert manager deployment
-cert_manager_enabled: true
+cert_manager_enabled: false
 # cert_manager_namespace: "cert-manager"
 
 # Add Persistent Volumes Storage Class for corresponding cloud provider ( OpenStack is only supported now )

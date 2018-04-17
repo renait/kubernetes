@@ -6,7 +6,7 @@ metadata:
     app: chartmuseum
 spec:
   capacity:
-    storage: 8Gi
+    storage: 2Gi
   accessModes:
     - ReadWriteOnce
   nfs:
