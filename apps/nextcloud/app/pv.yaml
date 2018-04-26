@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-mariadb
+  labels:
+    app: nextcloud
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/kubernetes/nextcloud/mariadb
+    server: 172.16.0.10
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-apache
+  labels:
+    app: nextcloud
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/kubernetes/nextcloud/html
+    server: 172.16.0.10
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-data
+  labels:
+    app: nextcloud
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/kubernetes/nextcloud/data
+    server: 172.16.0.10

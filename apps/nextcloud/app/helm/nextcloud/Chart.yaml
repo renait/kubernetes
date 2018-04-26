@@ -1,0 +1,19 @@
+appVersion: 10.0.7
+description: A file sharing server that puts the control and security of your own
+  data back into your hands.
+engine: gotpl
+home: https://nextcloud.com/
+icon: https://github.com/nextcloud/docker/blob/master/logo.svg
+keywords:
+- nextcloud
+- storage
+- http
+- web
+- php
+maintainers:
+- email: containers@bitnami.com
+  name: Bitnami
+name: nextcloud
+sources:
+- https://github.com/nextcloud/docker
+version: 0.1.0
