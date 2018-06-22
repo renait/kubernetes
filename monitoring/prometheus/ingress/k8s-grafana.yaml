@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/auth-realm: Authentication Required - monitoring
+    ingress.kubernetes.io/auth-secret: basic-auth
+    ingress.kubernetes.io/auth-type: basic
+  name: kube-prometheus-grafana
+  namespace: monitoring
+spec:
+  rules:
+  - host: k8s-grafana.explorer
+    http:
+      paths:
+      - backend:
+          serviceName: kube-prometheus-grafana
+          servicePort: 80
+        path: /

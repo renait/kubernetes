@@ -4,7 +4,7 @@
 image:
   registry: docker.io
   repository: nextcloud
-  tag: 13-apache
+  tag: 13.0.1-apache
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -186,6 +186,6 @@ resources:
     memory: 512Mi
     cpu: 300m
   limits:
-    memory: 512Mi
-    cpu: 300m
+    memory: 1024Mi
+    cpu: 500m
 

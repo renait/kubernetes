@@ -1,28 +1,24 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ template "plex.fullname" . }}
+  name: {{ template "radarr.fullname" . }}
   labels:
-    app: {{ template "plex.name" . }}
-    chart: {{ template "plex.chart" . }}
+    app: {{ template "radarr.name" . }}
+    chart: {{ template "radarr.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "plex.name" . }}
+      app: {{ template "radarr.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "plex.name" . }}
+        app: {{ template "radarr.name" . }}
         release: {{ .Release.Name }}
     spec:
-#      securityContext:
-#        runAsUser: 0
-#        fsGroup: 0
-      hostNetwork: true
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -31,32 +27,27 @@ spec:
 {{ toYaml .Values.env | indent 12 }}
           ports:
             - name: http
-              containerPort: 32400
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
-          - name: plex-config
+          - name: radarr-config
             mountPath: /config
-          - name: plex-movies
-            mountPath: /data/video
-          - name: plex-pictures
-            mountPath: /data/pictures
-          - name: plex-transcode
-            mountPath: /transcode
+          - name: radarr-download
+            mountPath: /downloads
+          - name: radarr-movies
+            mountPath: /movies
       volumes:
-      - name: plex-config
+      - name: radarr-config
         persistentVolumeClaim:
-          claimName: plex-config
-      - name: plex-movies
+          claimName: radarr-config
+      - name: radarr-download
+        persistentVolumeClaim:
+          claimName: sabnzbd-download
+      - name: radarr-movies
         persistentVolumeClaim:
           claimName: lib-movies
-      - name: plex-pictures
-        persistentVolumeClaim:
-          claimName: lib-pictures
-      - name: plex-transcode
-        persistentVolumeClaim:
-          claimName: transcode
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
