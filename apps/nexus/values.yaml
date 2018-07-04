@@ -6,7 +6,7 @@ image:
   #repository: sonatype/nexus3
   #tag: 3.10.0
   repository: cavemandaveman/nexus
-  tag: 3.10.0-04
+  tag: 3.12.1-01
 
 # node labels for node selection
 # nodeSelector:
@@ -72,9 +72,9 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: "1"
-    memory: "1300Mi"
+    cpu: "250m"
+    memory: "4800Mi"
   requests:
-    cpu: "100m"
-    memory: "128Mi"
+    cpu: "250m"
+    memory: "256Mi"
 
