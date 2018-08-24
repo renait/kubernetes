@@ -1,0 +1,159 @@
+## Bitnami openproject image version
+## ref: https://hub.docker.com/r/bitnami/openproject/tags/
+##
+image:
+  registry: docker.io
+  repository: openproject/community
+  tag: 7
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecrets:
+  #   - myRegistrKeySecretName
+
+## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
+## For Kubernetes v1.7, use 'networking.k8s.io/v1'
+networkPolicyApiVersion: extensions/v1beta1
+
+## Allowing use of ingress controllers
+## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
+##
+ingress:
+  enabled: true
+  servicePort: http
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
+    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    nginx.ingress.kubernetes.io/proxy-body-size: "80m"
+    nginx.org/proxy-connect-timeout: "30s"
+    nginx.org/proxy-read-timeout: "20s"
+    nginx.org/client-max-body-size: "80m"
+  tls:
+    - secretName: openproject-tls
+      hosts:
+        - openproject.explorer
+
+env:
+  # - name: EMAIL_DELIVERY_METHOD
+  #   value: "smtp"
+  # - name: SMTP_ADDRESS
+  #   value: "smtp.sendgrid.net"
+  # - name: SMTP_PORT
+  #   value: "587"
+  # - name: SMTP_DOMAIN
+  #   value: "my.domain.com"
+  # - name: SMTP_AUTHENTICATION
+  #   value: "login"
+  # - name: SMTP_ENABLE_STARTTLS_AUTO
+  #   value: "true"
+  # - name: SMTP_USER_NAME
+  #   value: "apikey"
+  # - name: SMTP_PASSWORD
+  #   value: "secret"
+
+## openproject host to create application URLs
+## ref: https://github.com/bitnami/bitnami-docker-openproject#configuration
+##
+openprojectHost: openproject.explorer
+
+## Application password
+## Defaults to a random 10-character alphanumeric string if not set
+##
+openprojectPassword: lVUCOKqoBX
+
+## loadBalancerIP for the openproject Service (optional, cloud specific)
+## ref: http://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+##
+# openprojectLoadBalancerIP:
+
+##
+## External database configuration
+##
+externalDatabase:
+  ## Database URL
+  url: postgres://openproject:YSo1RoaCZ5@openproject-postgresql:5432/openproject
+  # url:
+  # url: postgres://user:password@host:5432/dbname
+
+## Kubernetes configuration
+## For minikube, set this to NodePort, elsewhere use LoadBalancer
+##
+serviceType: ClusterIP
+
+## Enable persistence using Persistent Volume Claims
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  enabled: true
+  openproject:
+    ## openproject data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    existingClaim: openproject-data
+
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
+  postgresql:
+    ## postgresql data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    existingClaim: openproject-pgsql
+
+    accessMode: ReadWriteOnce
+    size: 2Gi
+
+  logs:
+    ## postgresql data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    existingClaim: openproject-logs
+
+    accessMode: ReadWriteOnce
+    size: 1Gi
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 300m
+  limits:
+    memory: 1024Mi
+    cpu: 500m
+

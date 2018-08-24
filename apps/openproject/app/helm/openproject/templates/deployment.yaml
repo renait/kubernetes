@@ -1,0 +1,82 @@
+{{- if include "openproject.host" . -}}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "openproject.fullname" . }}
+  labels:
+    app: {{ template "openproject.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "openproject.fullname" . }}
+    spec:
+      securityContext:
+        runAsUser: 0
+        fsGroup: 0
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
+      {{- end }}
+      containers:
+      - name: {{ template "openproject.fullname" . }}
+        image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        env:
+        {{- if not (empty .Values.externalDatabase.url) }}
+        - name: DATABASE_URL
+          value: {{ .Values.externalDatabase.url | quote }}
+        {{- end }}
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "openproject.fullname" . }}
+              key: openproject-password
+        {{- if not (empty .Values.env) }}			  
+{{ toYaml .Values.env | indent 8 }}
+        {{- end }}
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        {{- if (empty .Values.externalDatabase.url) }}
+        - name: postgresql-data
+          mountPath: /var/lib/postgresql/9.6/main
+        {{- end }}  
+        - name: openproject-logs
+          mountPath: /var/log/supervisor
+        - name: openproject-data
+          mountPath: /var/db/openproject
+      volumes:
+      - name: openproject-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.openproject.existingClaim }}{{ .Values.persistence.openproject.existingClaim }}{{- else }}{{ template "openproject.fullname" . }}-openproject{{- end }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+      - name: openproject-logs
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.logs.existingClaim }}{{ .Values.persistence.logs.existingClaim }}{{- else }}{{ template "openproject.fullname" . }}-logs{{- end }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+      {{- if (empty .Values.externalDatabase.url) }}
+      - name: postgresql-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.postgresql.existingClaim }}{{ .Values.persistence.postgresql.existingClaim }}{{- else }}{{ template "openproject.fullname" . }}-postgresql{{- end }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+      {{- end }}
+{{- end -}}

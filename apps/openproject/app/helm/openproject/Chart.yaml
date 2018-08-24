@@ -1,0 +1,19 @@
+appVersion: 7.4.7
+description: A project management tool that puts the control and security of your own
+  data back into your hands.
+engine: gotpl
+home: https://www.openproject.org/
+icon: https://github.com/nextcloud/docker/blob/master/logo.svg
+keywords:
+- openproject
+- agile
+- http
+- web
+- php
+maintainers:
+- email: info@rena-it.nl
+  name: RenA
+name: openproject
+sources:
+- https://github.com/renait/kubernetes/tree/master/apps/openproject
+version: 1.0.4

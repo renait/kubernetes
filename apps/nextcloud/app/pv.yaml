@@ -6,7 +6,7 @@ metadata:
     app: nextcloud
 spec:
   capacity:
-    storage: 8Gi
+    storage: 2Gi
   accessModes:
     - ReadWriteOnce
   nfs:
@@ -36,7 +36,7 @@ metadata:
     app: nextcloud
 spec:
   capacity:
-    storage: 8Gi
+    storage: 48Gi
   accessModes:
     - ReadWriteOnce
   nfs:

@@ -1,0 +1,21 @@
+{{- if .Values.persistence.enabled -}}
+{{- if not .Values.persistence.openproject.existingClaim -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "openproject.fullname" . }}-openproject
+spec:
+  accessModes:
+    - {{ .Values.persistence.openproject.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.openproject.size | quote }}
+{{- if .Values.persistence.openproject.storageClass }}
+{{- if (eq "-" .Values.persistence.openproject.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.openproject.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end -}}
+{{- end -}}
