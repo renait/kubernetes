@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: openkm-mariadb
-  labels:
-    app: openkm
-data:
-  3306: "default/openkm-mariadb:3306"
