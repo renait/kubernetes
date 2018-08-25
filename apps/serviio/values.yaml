@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: renait/serviio
-  tag: 1.9.2-4.0
+  repository: lsiocommunity/serviio
+  tag: latest
   #tag: 1.9.2-dist
   #tag: latest
   #repository: lsiocommunity/serviio

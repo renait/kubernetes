@@ -117,11 +117,6 @@ mariadb:
     persistence:
       enabled: true
 
-      ## A manually managed Persistent Volume and Claim
-      ## Requires persistence.enabled: true
-      ## If defined, PVC must be created manually before volume will be bound
-      existingClaim: nextcloud-mariadb
-
       ## mariadb data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -130,8 +125,13 @@ mariadb:
       ##   GKE, AWS & OpenStack)
       ##
       # storageClass: "-"
+      ## Persistent Volume Access Mode
+      ##
       accessMode: ReadWriteOnce
+      ## Persistent Volume size
+      ##
       size: 8Gi
+      ##
 
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
