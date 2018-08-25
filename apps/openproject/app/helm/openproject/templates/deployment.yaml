@@ -15,9 +15,6 @@ spec:
       labels:
         app: {{ template "openproject.fullname" . }}
     spec:
-      securityContext:
-        runAsUser: 0
-        fsGroup: 0
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.image.pullSecrets }}
@@ -29,7 +26,10 @@ spec:
         image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         env:
-        {{- if not (empty .Values.externalDatabase.url) }}
+        {{- if .Values.postgresql.enabled }}
+        - name: DATABASE_URL
+          value: postgres://{{ .Values.postgresql.postgresUser }}:{{ .Values.postgresql.postgresPassword }}@{{ template "openproject.postgresql.fullname" . }}:5432/{{ .Values.postgresql.postgresDatabase }}
+        {{- else }}
         - name: DATABASE_URL
           value: {{ .Values.externalDatabase.url | quote }}
         {{- end }}
@@ -47,10 +47,6 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
-        {{- if (empty .Values.externalDatabase.url) }}
-        - name: postgresql-data
-          mountPath: /var/lib/postgresql/9.6/main
-        {{- end }}  
         - name: openproject-logs
           mountPath: /var/log/supervisor
         - name: openproject-data
@@ -69,14 +65,5 @@ spec:
           claimName: {{ if .Values.persistence.logs.existingClaim }}{{ .Values.persistence.logs.existingClaim }}{{- else }}{{ template "openproject.fullname" . }}-logs{{- end }}
       {{- else }}
         emptyDir: {}
-      {{- end }}
-      {{- if (empty .Values.externalDatabase.url) }}
-      - name: postgresql-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ if .Values.persistence.postgresql.existingClaim }}{{ .Values.persistence.postgresql.existingClaim }}{{- else }}{{ template "openproject.fullname" . }}-postgresql{{- end }}
-      {{- else }}
-        emptyDir: {}
-      {{- end }}
       {{- end }}
 {{- end -}}

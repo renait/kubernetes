@@ -10,7 +10,19 @@ spec:
   resources:
     requests:
       storage: 8Gi
-
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: openproject-pgsql
+  labels:
+    app: openproject
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

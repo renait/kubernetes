@@ -59,7 +59,7 @@ env:
 # openprojectHost:
 
 ## Application password
-## Defaults to a random 10-character alphanumeric string if not set
+## Defaults to a random 30-character alphanumeric string if not set
 ##
 # openprojectPassword:
 
@@ -70,6 +70,49 @@ externalDatabase:
   ## Database URL
   url:
   # url: postgres://user:password@host:5432/dbname
+
+postgresql:
+  enabled: true
+
+  ## These parameters must be specified. They are used to build up the DATABASE_URL env variable
+  ## Create a database user
+  postgresUser: openproject
+  ## Create a database password
+  postgresPassword: secret
+  ## Create a database
+  postgresDatabase: openproject
+
+  ## Persist data to a persistent volume
+  persistence:
+    enabled: true
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim:
+
+    ## database data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 2Gi
+    subPath: "postgresql-db"
+    mountPath: /var/lib/postgresql/data/pgdata
+
+    # annotations: {}
+
+  ## Configure resource requests and limits
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
 
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
@@ -99,26 +142,8 @@ persistence:
     accessMode: ReadWriteOnce
     size: 8Gi
 
-  postgresql:
-    ## postgresql data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-
-    ## A manually managed Persistent Volume and Claim
-    ## Requires persistence.enabled: true
-    ## If defined, PVC must be created manually before volume will be bound
-    # existingClaim:
-
-    accessMode: ReadWriteOnce
-    size: 2Gi
-
   logs:
-    ## postgresql data Persistent Volume Storage Class
+    ## log data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
