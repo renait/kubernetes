@@ -1,2 +1,5 @@
 #!/bin/sh
-helm del --purge v0-cert-manager
+helm delete --purge cert-manager
+
+kubectl delete secret ca-kubernetes-secret -n kube-system
+kubectl delete secret ca-kubernetes-secret
