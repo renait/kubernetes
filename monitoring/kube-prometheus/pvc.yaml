@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: alertmanager-monitor-db-alertmanager-monitor-0
+  namespace: monitoring
+  labels:
+    app: kube-prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-monitor-db-prometheus-monitor-0
+  namespace: monitoring
+  labels:
+    app: kube-prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 12Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: monitor-grafana
+  namespace: monitoring
+  labels:
+    app: kube-prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
