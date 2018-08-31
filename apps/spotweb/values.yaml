@@ -15,16 +15,72 @@ service:
 
 ingress:
   enabled: true
-  annotations: {}
+  servicePort: http
+  annotations:
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  path: /
-  hosts:
-    - spotweb.explorer
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    # ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
+  host: spotweb.explorer
+  tls:
+    # - secretName: spotweb-tls
+    #   hosts:
+    #     - spotweb.cluster.local
+
+##
+## MariaDB chart configuration
+##
+mariadb:
+  ## Whether to deploy a mariadb server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
+  enabled: true
+  ## Disable MariaDB replication
+  replication:
+    enabled: false
+
+  ## Create a database and a database user
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
+  ##
+  db:
+    name: spotweb
+    user: spotweb
+    ## If the password is not specified, mariadb will generates a random password
+    ##
+    password: Zq59o7j21NWWg2cBXIdJ
+
+  ## MariaDB admin password
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#setting-the-root-password-on-first-run
+  ##
+  rootUser:
+    password: 6GRwVZINLRS6PMiZNVbO
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  master:
+    persistence:
+      enabled: true
+
+      ## A manually managed Persistent Volume and Claim
+      ## Requires persistence.enabled: true
+      ## If defined, PVC must be created manually before volume will be bound
+      # existingClaim:
+
+      ## mariadb data Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass: "-"
+      accessMode: ReadWriteOnce
+      size: 8Gi
+
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 128Mi
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -32,8 +88,8 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: 500m
-    memory: 512Mi
+    cpu: 200m
+    memory: 128Mi
   requests:
     cpu: 200m
     memory: 128Mi
@@ -43,4 +99,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
