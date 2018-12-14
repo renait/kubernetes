@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/nextcloud/mariadb
+    path: /fastdata/k8s/nextcloud/mariadb
     server: 172.16.0.10
 ---
 apiVersion: v1
@@ -25,7 +25,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/nextcloud/html
+    path: /fastdata/k8s/nextcloud/html
     server: 172.16.0.10
 ---
 apiVersion: v1
@@ -40,5 +40,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/nextcloud/data
+    path: /fastdata/k8s/nextcloud/data
     server: 172.16.0.10

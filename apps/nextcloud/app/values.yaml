@@ -4,7 +4,7 @@
 image:
   registry: docker.io
   repository: nextcloud
-  tag: 13.0.5-apache
+  tag: 14.0.4-apache
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -130,7 +130,7 @@ mariadb:
       accessMode: ReadWriteOnce
       ## Persistent Volume size
       ##
-      size: 8Gi
+      size: 2Gi
       ##
 
 ## Kubernetes configuration
