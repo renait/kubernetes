@@ -13,5 +13,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    path: /data/download
-    server: 172.16.0.10
+    path: {{ .Values.persistence.download.path }}
+    server: {{ .Values.persistence.download.server }}
