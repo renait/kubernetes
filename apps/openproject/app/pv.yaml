@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/openproject/pgsql
+    path: /fastdata/k8s/openproject/pgsql
     server: 172.16.0.10
 ---
 apiVersion: v1
@@ -25,7 +25,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/openproject/data
+    path: /fastdata/k8s/openproject/data
     server: 172.16.0.10
 ---
 apiVersion: v1
@@ -40,5 +40,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/openproject/logs
+    path: /fastdata/k8s/openproject/logs
     server: 172.16.0.10
