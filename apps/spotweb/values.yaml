@@ -71,15 +71,20 @@ mariadb:
       ##   GKE, AWS & OpenStack)
       ##
       storageClass: "-"
+      ## Persistent Volume Access Mode
+      ##
       accessMode: ReadWriteOnce
-      size: 8Gi
+      ## Persistent Volume size
+      ##
+      size: 5Gi
+      ##
 
     resources:
       limits:
-        cpu: 200m
+        cpu: 500m
         memory: 512Mi
       requests:
-        cpu: 500m
+        cpu: 200m
         memory: 128Mi
 
 resources:
