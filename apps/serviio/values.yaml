@@ -7,13 +7,8 @@ replicaCount: 1
 image:
   repository: lsiocommunity/serviio
   tag: latest
-  #tag: 1.9.2-dist
-  #tag: latest
-  #repository: lsiocommunity/serviio
-  #tag: latest
-  #tag: 84
-  #tag: 125
-  pullPolicy: IfNotPresent
+  #tag: 161
+  pullPolicy: Always
 
 service:
   type: ClusterIP
@@ -31,6 +26,11 @@ ingress:
     - secretName: serviio-tls
       hosts:
         - serviio.explorer
+
+persistence:
+  config:
+    path: /fastdata/k8s/serviio-config
+    server: 172.16.0.10
 
 env:
   - name: TZ
