@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/sickrage-config
+    path: /fastdata/k8s/sickrage-config
     server: 172.16.0.10
