@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    path: /data/kubernetes/transcode
+    path: /fastdata/k8s/transcode
     server: 172.16.0.10
