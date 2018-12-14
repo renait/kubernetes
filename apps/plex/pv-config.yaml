@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/plex-config
+    path: /fastdata/k8s/plex-config
     server: 172.16.0.10
