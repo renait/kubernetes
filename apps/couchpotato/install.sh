@@ -1,2 +1,2 @@
 #!/bin/bash
-helm upgrade --install couchpotato explorer/couchpotato
+helm upgrade --install -f values.yaml couchpotato explorer/couchpotato
