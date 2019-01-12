@@ -44,7 +44,7 @@ persistence:
     path: /fastdata/k8s/sabnzbd-config
     server: 172.16.0.10
   download:
-    path: /data/download
+    path: /fastdata/download
     server: 172.16.0.10
 
 resources:
