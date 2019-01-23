@@ -11,4 +11,4 @@ spec:
     - ReadWriteOnce
   nfs:
     path: /fastdata/k8s/plex-config
-    server: 172.16.0.10
+    server: san.explorer

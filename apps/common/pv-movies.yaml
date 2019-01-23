@@ -9,4 +9,4 @@ spec:
     - ReadWriteMany
   nfs:
     path: /data/media/video
-    server: 172.16.0.10
+    server: san.explorer

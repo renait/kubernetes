@@ -37,7 +37,7 @@ env:
 persistence:
   config:
     path: /fastdata/k8s/serviio-config
-    server: 172.16.0.10
+    server: san.explorer
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious

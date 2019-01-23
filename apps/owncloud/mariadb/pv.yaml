@@ -11,4 +11,4 @@ spec:
     - ReadWriteOnce
   nfs:
     path: /data/kubernetes/owncloud/mariadb
-    server: 172.16.0.10
+    server: san.explorer

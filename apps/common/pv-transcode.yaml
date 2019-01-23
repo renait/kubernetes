@@ -11,4 +11,4 @@ spec:
     - ReadWriteMany
   nfs:
     path: /fastdata/k8s/transcode
-    server: 172.16.0.10
+    server: san.explorer

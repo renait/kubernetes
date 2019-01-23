@@ -9,7 +9,7 @@ spec:
     - ReadWriteOnce
   nfs:
     path: /data/kubernetes/filerun/user-files
-    server: 172.16.0.10
+    server: san.explorer
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -22,7 +22,7 @@ spec:
     - ReadWriteOnce
   nfs:
     path: /data/kubernetes/filerun/html
-    server: 172.16.0.10
+    server: san.explorer
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -35,4 +35,4 @@ spec:
     - ReadWriteOnce
   nfs:
     path: /data/kubernetes/filerun/mariadb
-    server: 172.16.0.10
+    server: san.explorer

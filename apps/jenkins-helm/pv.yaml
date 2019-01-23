@@ -9,5 +9,5 @@
       - ReadWriteOnce
     nfs:
       path: /data/kubernetes/jenkins
-      server: 172.16.0.10
+      server: san.explorer
 

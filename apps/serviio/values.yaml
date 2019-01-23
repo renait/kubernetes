@@ -30,7 +30,7 @@ ingress:
 persistence:
   config:
     path: /fastdata/k8s/serviio-config
-    server: 172.16.0.10
+    server: san.explorer
 
 env:
   - name: TZ
