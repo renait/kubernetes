@@ -2,5 +2,5 @@
 
 cp -rfp inventory/sample inventory/$1
 
-declare -a IPS=(192.168.2.90 192.168.2.91)
+declare -a IPS=(192.168.2.90 192.168.2.91 192.168.2.92)
 CONFIG_FILE=inventory/$1/hosts.ini python3 contrib/inventory_builder/inventory.py ${IPS[@]}
