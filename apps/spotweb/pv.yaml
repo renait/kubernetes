@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /fastdata/k8s/spotweb-mariadb
+    path: /data/k8s/spotweb-mariadb
     server: san.explorer

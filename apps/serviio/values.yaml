@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: lsiocommunity/serviio
+  repository: renait/serviio
+  #repository: lsiocommunity/serviio
   tag: latest
-  #tag: 161
   pullPolicy: Always
 
 service:
@@ -29,7 +29,7 @@ ingress:
 
 persistence:
   config:
-    path: /fastdata/k8s/serviio-config
+    path: /data/k8s/serviio-config
     server: san.explorer
 
 env:

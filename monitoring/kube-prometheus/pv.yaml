@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /fastdata/k8s/monitoring/alertmanager
+    path: /data/k8s/monitoring/alertmanager
     server: san.explorer
 ---
 apiVersion: v1
@@ -27,7 +27,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /fastdata/k8s/monitoring/prometheus
+    path: /data/k8s/monitoring/prometheus
     server: san.explorer
 ---
 apiVersion: v1
@@ -43,5 +43,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /fastdata/k8s/monitoring/grafana
+    path: /data/k8s/monitoring/grafana
     server: san.explorer

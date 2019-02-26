@@ -36,5 +36,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    path: /fastdata/k8s/transcode
+    path: /data/k8s/transcode
     server: san.explorer
