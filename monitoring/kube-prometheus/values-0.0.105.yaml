@@ -62,13 +62,14 @@ alertmanager:
   ingress:
     ## If true, Alertmanager Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## Annotations for Alertmanager Ingress
     ##
-    annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
+    annotations:
+      certmanager.k8s.io/issuer: ca-kubernetes-issuer
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
 
     ## Labels to be added to the Ingress
     ##
@@ -79,15 +80,16 @@ alertmanager:
     ##
     # hosts:
     #   - alertmanager.domain.com
-    hosts: []
+    hosts:
+      - k8s-alertmanager.explorer
 
     ## TLS configuration for Alertmanager Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: []
-      # - secretName: alertmanager-general-tls
-      #   hosts:
-      #     - alertmanager.example.com
+    tls:
+      - secretName: alertmanager-general-tls
+        hosts:
+          - k8s-alertmanager.explorer
 
   ## Node labels for Alertmanager pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -111,9 +113,13 @@ alertmanager:
   ## Resource limits & requests
   ## Ref: https://kubernetes.io/docs/user-guide/compute-resources/
   ##
-  resources: {}
-    # requests:
-    #   memory: 400Mi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 200Mi
+#    limits:
+#      cpu: 200m
+#      memory: 400Mi
 
   ## List of Secrets in the same namespace as the AlertManager
   ## object, which shall be mounted into the AlertManager Pods.
@@ -156,7 +162,16 @@ alertmanager:
   ## Alertmanager StorageSpec for persistent data
   ## Ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/storage.md
   ##
-  storageSpec: {}
+  storageSpec:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: ""
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 8Gi
+      selector: {}
+
   #  volumeClaimTemplate:
   #    spec:
   #      storageClassName: gluster
@@ -197,13 +212,14 @@ prometheus:
   ingress:
     ## If true, Prometheus Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## Annotations for Prometheus Ingress
     ##
-    annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
+    annotations:
+      certmanager.k8s.io/issuer: ca-kubernetes-issuer
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
 
     ## Labels to be added to the Ingress
     ##
@@ -214,15 +230,16 @@ prometheus:
     ##
     # hosts:
     #   - alertmanager.domain.com
-    hosts: []
+    hosts:
+      - k8s-prometheus.explorer
 
     ## TLS configuration for Prometheus Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: []
-      # - secretName: prometheus-k8s-tls
-      #   hosts:
-      #     - prometheus.example.com
+    tls:
+      - secretName: prometheus-k8s-tls
+        hosts:
+          - k8s-prometheus.explorer
 
   ## Node labels for Prometheus pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -246,9 +263,13 @@ prometheus:
   ## Resource limits & requests
   ## Ref: https://kubernetes.io/docs/user-guide/compute-resources/
   ##
-  resources: {}
-    # requests:
-    #   memory: 400Mi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 400Mi
+#    limits:
+#      cpu: 200m
+#      memory: 800Mi
 
   ## List of Secrets in the same namespace as the Prometheus
   ## object, which shall be mounted into the Prometheus Pods.
@@ -418,7 +439,14 @@ prometheus:
   ## Prometheus StorageSpec for persistent data
   ## Ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/storage.md
   ##
-  storageSpec: {}
+  storageSpec:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: ""
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 8Gi
   #  volumeClaimTemplate:
   #    spec:
   #      storageClassName: gluster
@@ -431,6 +459,42 @@ prometheus:
   sidecarsSpec: []
   # - name: sidecar
   #   image: registry/name:tag
+
+grafana:
+  serverDashboardConfigmaps:
+    - custom-dashboards
+
+  storageSpec:
+    class: ""
+    accessMode: "ReadWriteOnce"
+    resources:
+      requests:
+        storage: 2Gi
+    selector: {}
+
+  ## Resource limits & requests
+  ## Ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+#    limits:
+#      cpu: 100m
+#      memory: 200Mi
+
+  ingress:
+    enabled: true
+    annotations:
+      certmanager.k8s.io/issuer: ca-kubernetes-issuer
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - k8s-grafana.explorer
+    tls:
+      - secretName: grafana-tls
+        hosts:
+          - k8s-grafana.explorer
 
 # default rules are in templates/general.rules.yaml
 # prometheusRules: {}
