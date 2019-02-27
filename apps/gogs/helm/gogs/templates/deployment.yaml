@@ -58,13 +58,13 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-            {{- if .Values.installLock }}
+            {{- if .Values.service.gogs.installLock }}
             - name: config
               mountPath: /data/gogs/conf/app.ini
               subPath: app.ini
             {{- end }}
       volumes:
-      {{- if .Values.installLock }}
+      {{- if .Values.service.gogs.installLock }}
         - name: config
           configMap:
             name: {{ template "gogs.fullname" . }}-config
