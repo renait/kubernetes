@@ -22,7 +22,7 @@ global:
     enabled: false
 
   ## doc/installation/deployment.md#deploy-the-community-edition
-  # edition: ee
+  edition: ce
 
   ## doc/charts/globals.md#gitlab-version
   # gitlabVersion: master
@@ -33,7 +33,7 @@ global:
     links: []
   ## doc/charts/globals.md#configure-host-settings
   hosts:
-    domain: example.com
+    domain: gitlab.explorer
     # hostSuffix:
     https: true
     externalIP:
@@ -42,7 +42,8 @@ global:
   ## doc/charts/globals.md#configure-ingress-settings
   ingress:
     configureCertmanager: true
-    annotations: {}
+    annotations:
+      certmanager.k8s.io/issuer: ca-kubernetes-issuer
     enabled: true
     # tls:
     #   enabled: true
@@ -284,7 +285,7 @@ global:
 certmanager:
   # Install cert-manager chart. Set to false if you already have cert-manager
   # installed or if you are not using cert-manager.
-  install: true
+  install: false
   # Other cert-manager configurations from upstream
   # See https://github.com/kubernetes/charts/tree/master/stable/cert-manager#configuration
   rbac:
@@ -294,7 +295,7 @@ certmanager:
 ## doc/architecture/decisions.md#nginx-ingress
 ## Installation & configuration of charts/nginx
 nginx-ingress:
-  enabled: true
+  enabled: false
   tcpExternalConfig: "true"
   controller:
     config:
@@ -342,7 +343,7 @@ nginx-ingress:
 ## Installation & configuration of stable/prometheus
 ## See requirements.yaml for current version
 prometheus:
-  install: true
+  install: false
   rbac:
     create: true
   alertmanager:
@@ -377,7 +378,7 @@ postgresql:
   usePasswordFile: true
   existingSecret: 'secret'
   metrics:
-    enabled: true
+    enabled: false
     ## Optionally define additional custom metrics
     ## ref: https://github.com/wrouesnel/postgres_exporter#adding-new-metrics-via-a-config-file
 
@@ -399,7 +400,7 @@ shared-secrets:
 ## Installation & configuration of gitlab/gitlab-runner
 ## See requirements.yaml for current version
 gitlab-runner:
-  install: true
+  install: false
   rbac:
     create: true
   runners:
@@ -414,10 +415,10 @@ gitlab-runner:
 
 ## Settings for individual sub-charts under GitLab
 ## Note: Many of these settings are configurable via globals
-# gitlab:
+gitlab:
 ## doc/charts/gitlab/migrations
-#   migrations:
-#     enabled: false
+#  migrations:
+#    enabled: false
 ## doc/charts/gitlab/unicorn 
 #   unicorn:
 #     enabled: false
