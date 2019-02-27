@@ -51,22 +51,19 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
-          - name: gitlab-config
+          - name: gitlab-data
+            subPath: config
             mountPath: /etc/gitlab
           - name: gitlab-data
+            subPath: data
             mountPath: /var/opt/gitlab
-          - name: gitlab-logs
+          - name: gitlab-data
+            subPath: log
             mountPath: /var/log/gitlab
       volumes:
-        - name: gitlab-config
-          persistentVolumeClaim:
-            claimName: gitlab-config
         - name: gitlab-data
           persistentVolumeClaim:
             claimName: gitlab-data
-        - name: gitlab-logs
-          persistentVolumeClaim:
-            claimName: gitlab-logs
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

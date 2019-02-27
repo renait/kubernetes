@@ -6,18 +6,19 @@ replicaCount: 1
 
 image:
   repository: gitlab/gitlab-ce
-  tag: 11.7.5-ce.0
+  tag: 11.8.0-ce.0
   pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  port: 80
+  httpPort: 80
+  sshPort: 22
 
 ingress:
   enabled: true
   annotations:
     certmanager.k8s.io/issuer: ca-kubernetes-issuer
-    # kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
@@ -38,11 +39,11 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: 1000m
+    cpu: 2000m
     memory: 4Gi
   requests:
     cpu: 256m
-    memory: 512m
+    memory: 1Gi
 
 nodeSelector: {}
 
