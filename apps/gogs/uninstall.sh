@@ -1,4 +1,6 @@
 #!/bin/bash
-helm delete --purge gitea
-kubectl delete pvc gitea-data
-kubectl delete pv gitea-data
+helm delete --purge gogs
+kubectl delete pvc gogs-data
+kubectl delete pvc gogs-pgsql
+kubectl delete pv gogs-data
+kubectl delete pv gogs-pgsql
