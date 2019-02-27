@@ -53,6 +53,8 @@ spec:
             mountPath: /opt/serviio/log
           - name: serviio-movies
             mountPath: /media/serviio
+          - name: serviio-transcode
+            mountPath: /var/serviio
       volumes:
       - name: serviio-data
         persistentVolumeClaim:
@@ -60,6 +62,9 @@ spec:
       - name: serviio-movies
         persistentVolumeClaim:
           claimName: lib-movies
+      - name: serviio-transcode
+        persistentVolumeClaim:
+          claimName: transcode
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
