@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "serviio.fullname" . }}-data
+  labels:
+    app: {{ template "serviio.name" . }}
+    chart: {{ template "serviio.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: {{ .Values.persistence.data.path }}
+    server: {{ .Values.persistence.data.server }}
+

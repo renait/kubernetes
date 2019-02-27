@@ -1,0 +1,54 @@
+# Default values for serviio.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: riftbit/serviio
+  tag: v1.10.1
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 23423
+
+ingress:
+  enabled: true
+  annotations:
+    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - serviio.explorer
+  tls:
+    - secretName: serviio-tls
+      hosts:
+        - serviio.explorer
+
+env:
+  - name: TZ
+    value: "Europe/Amsterdam"
+
+persistence:
+  data:
+    path: /data/k8s/serviio
+    server: san.explorer
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
