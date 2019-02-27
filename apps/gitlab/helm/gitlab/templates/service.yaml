@@ -18,7 +18,6 @@ spec:
       targetPort: ssh
       protocol: TCP
       name: ssh
-name: {{ default "gogs" .Values.service.nameOverride }}-ssh
   selector:
     app: {{ template "gitlab.name" . }}
     release: {{ .Release.Name }}
