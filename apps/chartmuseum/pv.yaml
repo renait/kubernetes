@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /fastdata/k8s/chartmuseum
+    path: /data/k8s/chartmuseum
     server: san.explorer

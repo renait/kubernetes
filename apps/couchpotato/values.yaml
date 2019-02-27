@@ -37,7 +37,7 @@ env:
 
 persistence:
   config:
-    path: /fastdata/k8s/couchpotato-config
+    path: /data/k8s/couchpotato-config
     server: san.explorer
 
 resources:

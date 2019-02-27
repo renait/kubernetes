@@ -41,7 +41,7 @@ env:
 
 persistence:
   config:
-    path: /fastdata/k8s/sabnzbd-config
+    path: /data/k8s/sabnzbd-config
     server: san.explorer
   download:
     path: /fastdata/download
