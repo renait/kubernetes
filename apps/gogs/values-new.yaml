@@ -5,7 +5,7 @@
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ##
-serviceType: ClusterIP
+serviceType: NodePort
 
 replicaCount: 1
 
@@ -24,10 +24,18 @@ service:
   ##
   httpPort: 80
 
-  ## SSH listen port.
+  ## HTTP listen port on Kubernetes node.
   ## ref: https://gogs.io/docs/advanced/configuration_cheat_sheet
   ##
+  httpNodePort:
+
+  ## SSH listen port.
+  ##
   sshPort: 22
+
+  ## SSH listen port on Kubernetes node.
+  ##
+  sshNodePort:
 
   ## SSH_DOMAIN - Domain name to be exposed in SSH clone URL.
   ## ref: https://gogs.io/docs/advanced/configuration_cheat_sheet
@@ -41,7 +49,7 @@ service:
 
     ## Application name, can be your company or team name.
     ##
-    appName: 'Gogs Explorer'
+    appName: 'Gogs'
 
     ## Either "dev", "prod" or "test".
     ##
@@ -55,6 +63,10 @@ service:
     ## disabled, users can only perform Git operations via SSH.
     ##
     disableHttpGit: false
+
+    ## Lock the path /install to configure gogs
+    ##
+    installLock: true
 
     ## Indicates whether or not to enable repository file upload feature.
     ##
@@ -93,6 +105,34 @@ service:
     ##
     serviceEnableNotifyMail: false
 
+    ## Enable this to send mail with SMTP server.
+    ##
+    mailerEnabled: false
+
+    ## SMTP server host.
+    ##
+    mailerHost:
+
+    ## SMTP server user.
+    ##
+    mailerUser:
+
+    ## SMTP server password.
+    ##
+    mailerPasswd:
+
+    ## Mail from address. Format RFC 5322, email@example.com, or "Name" <email@example.com>
+    ##
+    mailerFrom:
+
+    ## Prefix prepended mail subject.
+    ##
+    mailerSubjectPrefix:
+
+    ## Do not verify the self-signed certificates.
+    ##
+    mailerSkipVerify: false
+
     ## Either "memory", "redis", or "memcache", default is "memory"
     ##
     cacheAdapter: memory
@@ -109,11 +149,11 @@ service:
 
     ## Enable this to use captcha validation for registration.
     ##
-    serverDomain: gogs.explorer
+    serverDomain: gogs.example.com
 
     ## Full public URL of Gogs server.
     ##
-    serverRootUrl: https://gogs.explorer/
+    serverRootUrl: http://gogs.example.com/
 
     ## Landing page for non-logged users, can be "home" or "explore"
     ##
@@ -180,7 +220,7 @@ service:
 
     ## Change this value for your installation.
     ##
-    securitySecretKey: "ko9xtBYxinK6Lp"
+    securitySecretKey: "changeme"
 
     ## Number of repositories that are showed in one explore page
     ##
@@ -195,47 +235,84 @@ service:
     ##
     uiFeedMaxCommitNum: 5
 
+    ## Enable running cron tasks periodically.
+    ##
+    cronEnabled: true
+
+    ## Run cron tasks when Gogs starts.
+    ##
+    cronRunAtStart: false
+
+    ## Cron syntax for scheduling update mirrors, e.g. @every 1h.
+    ##
+    cronUpdateMirrorsSchedule: '@every 10m'
+
+    ## Cron syntax for scheduling repository health check, e.g. @every 24h.
+    ##
+    cronRepoHealthCheckSchedule: '@every 24h'
+
+    ## Time duration syntax for health check execution timeout, e.g. 60s.
+    ##
+    cronRepoHealthCheckTimeout: 60s
+
+    ## Arguments for command git fsck, e.g. --unreachable --tags.
+    ##
+    cronRepoHealthCheckArgs:
+
+    ## Enable this to run repository statistics check at start time.
+    ##
+    cronCheckRepoStatsRunAtStart: true
+
+    ## Cron syntax for scheduling repository statistics check, e.g. @every 24h.
+    ##
+    cronCheckRepoStatsSchedule: '@every 24h'
+
+    ## Enable this to run repository archives cleanup at start time.
+    ##
+    cronRepoArchiveCleanupRunAtStart: false
+
+    ## Cron syntax for scheduling repository statistics check, e.g. @every 24h.
+    ##
+    cronRepoArchiveCleanupSchedule: '@every 24h'
+
+    ## Time duration to check if archive should be cleaned, e.g. 24h
+    ##
+    cronRepoArchiveCleanupOlderThan: 24h
+
   ## Ingress configuration.
   ## ref: https://kubernetes.io/docs/user-guide/ingress/
   ##
   ingress:
     ## Enable Ingress.
     ##
-    enabled: true
+    enabled: false
 
     ## Annotations.
     ##
     # annotations:
     #   kubernetes.io/ingress.class: nginx
     #   kubernetes.io/tls-acme: 'true'
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      # ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
-      certmanager.k8s.io/issuer: ca-kubernetes-issuer
-      nginx.ingress.kubernetes.io/proxy-body-size: "3m"
-      nginx.org/proxy-connect-timeout: "30s"
-      nginx.org/proxy-read-timeout: "20s"
-      nginx.org/client-max-body-size: "5m"
 
     ## Hostnames.
     ## Must be provided if Ingress is enabled.
     ##
-    hosts:
-      - gogs.explorer
+    # hosts:
+    #   - gogs.domain.com
 
     ## TLS configuration.
     ## Secrets must be manually created in the namespace.
     ##
-    tls:
-      - secretName: gogs-tls
-        hosts:
-          - gogs.explorer
+    # tls:
+    #   - secretName: gogs-tls
+    #     hosts:
+    #       - gogs.domain.com
 
   ## Service annotations.
   ## Allows attaching metadata to services for kubernetes components to act on.
   ##
   # annotations:
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+
 
 ## Persistent Volume Storage configuration.
 ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes
@@ -245,10 +322,9 @@ persistence:
   ##
   enabled: true
 
-  ## A manually managed Persistent Volume and Claim
-  ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
-  existingClaim: gogs-data
+  ##
+  # existingClaim: "-"
 
   ## gogs data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
@@ -257,7 +333,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "-"
+  # storageClass: "-"
 
   ## Persistent Volume Access Mode.
   ##
@@ -283,7 +359,7 @@ postgresql:
   ## PostgreSQL Password for the new user.
   ## If not set, a random 10 characters password will be used.
   ##
-  postgresPassword: yxdC2gdXIM6EN4
+  postgresPassword: gogs
 
   ## PostgreSQL Database to create.
   ##
@@ -297,20 +373,11 @@ postgresql:
     ##
     enabled: true
 
-    ## A manually managed Persistent Volume and Claim
-    ## Requires persistence.enabled: true
-    ## If defined, PVC must be created manually before volume will be bound
-    existingClaim: gogs-pgsql
+## Security context
+securityContext: {}
 
-    ## database data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    storageClass: "-"
-    accessMode: ReadWriteOnce
-    size: 2Gi
-    subPath: "postgresql-db"
-    mountPath: /var/lib/postgresql/data/pgdata
+## Node, affinity and tolerations labels for pod assignment
+nodeSelector: {}
+affinity: {}
+tolerations: []
+
