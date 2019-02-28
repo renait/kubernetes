@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-operator-db-alertmanager
+  namespace: monitoring
+  labels:
+    app: prometheus-operator
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /fastdata/k8s/monitoring/alertmanager
+    server: san.explorer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-operator-db-prometheus
+  namespace: monitoring
+  labels:
+    app: prometheus-operator
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /fastdata/k8s/monitoring/prometheus
+    server: san.explorer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-operator-grafana
+  namespace: monitoring
+  labels:
+    app: prometheus-operator
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /fastdata/k8s/monitoring/grafana
+    server: san.explorer
