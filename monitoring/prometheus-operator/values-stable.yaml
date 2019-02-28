@@ -225,15 +225,16 @@ alertmanager:
     ## Storage is the definition of how storage will be used by the Alertmanager instances.
     ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/storage.md
     ##
-    storage:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: ""
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 8Gi
-        selector: {}
+#    storage:
+#      volumeClaimTemplate:
+#        spec:
+#          storageClassName: ""
+#          accessModes: ["ReadWriteOnce"]
+#          resources:
+#            requests:
+#              storage: 8Gi
+#        selector: {}
+    storage: {}
     # volumeClaimTemplate:
     #   spec:
     #     storageClassName: gluster
@@ -268,7 +269,7 @@ alertmanager:
     resources:
       requests:
         cpu: 100m
-        memory: 200Mi
+        memory: 400Mi
     # requests:
     #   memory: 400Mi
 
@@ -333,16 +334,16 @@ grafana:
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
-  persistence:
-    enabled: true
-    initChownData: true
-    # storageClassName: default
-    accessModes:
-      - ReadWriteOnce
-    size: 2Gi
-    # annotations: {}
-    # subPath: ""
-    existingClaim: monitor-grafana
+#  persistence:
+#    enabled: true
+#    initChownData: true
+#    # storageClassName: default
+#    accessModes:
+#      - ReadWriteOnce
+#    size: 2Gi
+#    # annotations: {}
+#    # subPath: ""
+#    existingClaim: monitor-grafana
 
   ingress:
     ## If true, Prometheus Ingress will be created
@@ -396,11 +397,12 @@ grafana:
       enabled: true
       label: grafana_datasource
 
-  extraConfigmapMounts:
-    - name: custom-dashboards
-      mountPath: /var/lib/grafana/dashboards/
-      configMap: custom-dashboards
-      readOnly: true
+  extraConfigmapMounts: []
+#  extraConfigmapMounts:
+#    - name: custom-dashboards
+#      mountPath: /var/lib/grafana/dashboards/
+#      configMap: custom-dashboards
+#      readOnly: true
 
   #extraConfigmapMounts: []
   # - name: certs-configmap
@@ -676,7 +678,7 @@ prometheusOperator:
   resources:
     requests:
       cpu: 100m
-      memory: 50Mi
+      memory: 100Mi
   # limits:
   #   cpu: 200m
   #   memory: 200Mi
@@ -1016,14 +1018,14 @@ prometheus:
     ## Prometheus StorageSpec for persistent data
     ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/storage.md
     ##
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: ""
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 8Gi
+#    storageSpec:
+#      volumeClaimTemplate:
+#        spec:
+#          storageClassName: ""
+#          accessModes: ["ReadWriteOnce"]
+#          resources:
+#            requests:
+#              storage: 8Gi
     #  volumeClaimTemplate:
     #    spec:
     #      storageClassName: gluster
