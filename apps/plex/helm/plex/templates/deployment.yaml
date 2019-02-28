@@ -33,6 +33,32 @@ spec:
             - name: http
               containerPort: 32400
               protocol: TCP
+          livenessProbe: 
+            httpGet: 
+              path: / 
+              port: 32400 
+              scheme: HTTP 
+            initialDelaySeconds: 60 
+            # problems with "connection refused", "use of closed network connection" 
+            # "Increasing the probe timeout to 15 seconds solved this for me, thanks for the suggestion." 
+            # https://github.com/kubernetes/kubernetes/issues/19904 
+            timeoutSeconds: 5 
+            periodSeconds: 30 
+            successThreshold: 1 
+            failureThreshold: 10
+          readinessProbe: 
+            httpGet: 
+              path: / 
+              port: 32400 
+              scheme: HTTP 
+            initialDelaySeconds: 30 
+            # problems with "connection refused", "use of closed network connection" 
+            # "Increasing the probe timeout to 15 seconds solved this for me, thanks for the suggestion." 
+            # https://github.com/kubernetes/kubernetes/issues/19904 
+            timeoutSeconds: 25 
+            periodSeconds: 30 
+            successThreshold: 1 
+            failureThreshold: 10
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
