@@ -16,21 +16,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nextcloud-apache
-  labels:
-    app: nextcloud
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  nfs:
-    path: /data/k8s/nextcloud/html
-    server: san.explorer
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
   name: nextcloud-data
   labels:
     app: nextcloud

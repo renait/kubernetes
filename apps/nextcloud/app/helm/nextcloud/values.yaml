@@ -4,7 +4,7 @@
 image:
   registry: docker.io
   repository: nextcloud
-  tag: 13.0.5-apache
+  tag: 15.0.7-apache
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -27,13 +27,45 @@ networkPolicyApiVersion: extensions/v1beta1
 ingress:
   enabled: false
   servicePort: http
-  annotations:
-    # kubernetes.io/ingress.class: nginx
-    # ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
+  annotations: {}
+  #  nginx.ingress.kubernetes.io/proxy-body-size: 4G
+  #  kubernetes.io/ingress.class: nginx
+  #  kubernetes.io/tls-acme: "true"
+  #  certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+  #  nginx.ingress.kubernetes.io/server-snippet: |-
+  #    server_tokens off;
+  #    proxy_hide_header X-Powered-By;
+  #
+  #    rewrite ^/.well-known/webfinger /public.php?service=webfinger last;
+  #    rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+  #    rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+  #    location = /.well-known/carddav {
+  #      return 301 $scheme://$host/remote.php/dav;
+  #    }
+  #    location = /.well-known/caldav {
+  #      return 301 $scheme://$host/remote.php/dav;
+  #    }
+  #    location = /robots.txt {
+  #      allow all;
+  #      log_not_found off;
+  #      access_log off;
+  #    }
+  #    location ~ \.(?:png|html|ttf|ico|jpg|jpeg)$ {
+  #      try_files $uri /index.php$request_uri;
+  #      # Optional: Don't log access to other assets
+  #      access_log off;
+  #    }
+  #    location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+  #      deny all;
+  #    }
+  #    location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+  #      deny all;
+  #    }
+
   tls:
-    # - secretName: nextcloud.cluster.local
-    #   hosts:
-    #     - nextcloud.cluster.local
+  #  - secretName: nextcloud-tls
+  #    hosts:
+  #      - nextcloud.cluster.local
 
 ## nextcloud host to create application URLs
 ## ref: https://github.com/bitnami/bitnami-docker-nextcloud#configuration
@@ -138,23 +170,6 @@ serviceType: LoadBalancer
 ##
 persistence:
   enabled: true
-  apache:
-    ## apache data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-
-    ## A manually managed Persistent Volume and Claim
-    ## Requires persistence.enabled: true
-    ## If defined, PVC must be created manually before volume will be bound
-    # existingClaim:
-
-    accessMode: ReadWriteOnce
-    size: 1Gi
   nextcloud:
     ## nextcloud data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>

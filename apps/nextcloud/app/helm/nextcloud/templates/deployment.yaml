@@ -67,21 +67,25 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: nextcloud-data
+          mountPath: /var/www/html/
+          subPath: root
+        - name: nextcloud-data
           mountPath: /var/www/html/data
-        - name: apache-data
-          mountPath: /var/www/html
+          subPath: data
+        - name: nextcloud-data
+          mountPath: /var/www/html/config
+          subPath: config
+        - name: nextcloud-data
+          mountPath: /var/www/html/custom_apps
+          subPath: custom_apps
+        - name: nextcloud-data
+          mountPath: /var/www/html/themes
+          subPath: themes
       volumes:
       - name: nextcloud-data
       {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ if .Values.persistence.nextcloud.existingClaim }}{{ .Values.persistence.nextcloud.existingClaim }}{{- else }}{{ template "nextcloud.fullname" . }}-nextcloud{{- end }}
-      {{- else }}
-        emptyDir: {}
-      {{- end }}
-      - name: apache-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ if .Values.persistence.apache.existingClaim }}{{ .Values.persistence.apache.existingClaim }}{{- else }}{{ template "nextcloud.fullname" . }}-apache{{- end }}
       {{- else }}
         emptyDir: {}
       {{- end }}
