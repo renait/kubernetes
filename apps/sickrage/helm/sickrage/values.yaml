@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: linuxserver/sickrage
+  repository: linuxserver/sickchill
   tag: latest
   pullPolicy: Always
 
@@ -21,11 +21,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - sickrage.explorer
+    - sickchill.explorer
   tls:
-    - secretName: sickrage-tls
+    - secretName: sickchill-tls
       hosts:
-        - sickrage.explorer
+        - sickchill.explorer
 
 env:
   - name: TZ
