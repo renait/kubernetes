@@ -1,6 +1,8 @@
 ## Bitnami nextcloud image version
 ## ref: https://hub.docker.com/r/bitnami/nextcloud/tags/
 ##
+image:
+  tag: 16.0.1-apache
 
 ## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
 ## For Kubernetes v1.7, use 'networking.k8s.io/v1'
@@ -46,7 +48,7 @@ ingress:
      location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
        deny all;
      }
-  
+
   tls:
     - secretName: nextcloud-tls
       hosts:
@@ -83,9 +85,12 @@ allowEmptyPassword: no
 mariadb:
   ## Whether to deploy a mariadb server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
   enabled: true
-  ## Disable MariaDB replication
-  replication:
-    enabled: false
+
+  ## MariaDB admin password
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#setting-the-root-password-on-first-run
+  ##
+  rootUser:
+    password: 47Gr1UytlWph2tFY
 
   ## Create a database and a database user
   ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
@@ -97,19 +102,14 @@ mariadb:
     ##
     password: KZv8gcD3fealGrx1
 
-  ## MariaDB admin password
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#setting-the-root-password-on-first-run
-  ##
-  rootUser:
-    password: 47Gr1UytlWph2tFY
+  ## Disable MariaDB replication
+  replication:
+    enabled: false
 
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
   master:
-    persistence:
-      enabled: true
-
       ## mariadb data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -118,6 +118,7 @@ mariadb:
       ##   GKE, AWS & OpenStack)
       ##
       storageClass: "-"
+      existingClaim: data-nextcloud-mariadb-0
       ## Persistent Volume Access Mode
       ##
       accessMode: ReadWriteOnce
