@@ -1,0 +1,203 @@
+## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
+## For Kubernetes v1.7, use 'networking.k8s.io/v1'
+networkPolicyApiVersion: extensions/v1beta1
+
+## Allowing use of ingress controllers
+## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
+##
+ingress:
+  enabled: true
+  servicePort: http
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  #  ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
+    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+  #  certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: "256m"
+  #  nginx.org/proxy-connect-timeout: "30s"
+  #  nginx.org/proxy-read-timeout: "20s"
+  #  nginx.org/client-max-body-size: "256m"
+    nginx.ingress.kubernetes.io/server-snippet: |-
+     server_tokens off;
+     proxy_hide_header X-Powered-By;
+
+     rewrite ^/.well-known/webfinger /public.php?service=webfinger last;
+     rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+     rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+     location = /.well-known/carddav {
+       return 301 $scheme://$host/remote.php/dav;
+     }
+     location = /.well-known/caldav {
+       return 301 $scheme://$host/remote.php/dav;
+     }
+     location = /robots.txt {
+       allow all;
+       log_not_found off;
+       access_log off;
+     }
+     location ~ \.(?:png|html|ttf|ico|jpg|jpeg)$ {
+       try_files $uri /index.php$request_uri;
+       # Optional: Don't log access to other assets
+       access_log off;
+     }
+     location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+       deny all;
+     }
+     location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+       deny all;
+     }
+
+  tls:
+    - secretName: nextcloud-tls
+      hosts:
+        - nextcloud.explorer
+
+## nextcloud host to create application URLs
+## ref: https://github.com/bitnami/bitnami-docker-nextcloud#configuration
+##
+nextcloud:
+  host: nextcloud.explorer
+  username: admin
+  password: 35MZttOoECEtk7x0
+
+internalDatabase:
+  enabled: false
+
+##
+## MariaDB chart configuration
+##
+mariadb:
+  ## Whether to deploy a mariadb server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
+  enabled: true
+
+  ## MariaDB admin password
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#setting-the-root-password-on-first-run
+  ##
+  rootUser:
+    password: 47Gr1UytlWph2tFY
+
+  ## Create a database and a database user
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
+  ##
+  db:
+    name: nextcloud
+    user: nextcloud
+    ## If the password is not specified, mariadb will generates a random password
+    ##
+    password: KZv8gcD3fealGrx1
+
+  ## Disable MariaDB replication
+  replication:
+    enabled: false
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  master:
+    persistence:
+      ## mariadb data Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass: "-"
+      #existingClaim: data-nextcloud-mariadb-0
+      #mountPath: /bitnami/mariadb/data
+      ## Persistent Volume size
+      ##
+      size: 2Gi
+      ##
+
+    ## Configure MySQL with a custom my.cnf file
+    ## ref: https://mysql.com/kb/en/mysql/configuring-mysql-with-mycnf/#example-of-configuration-file
+    ##
+    config: |-
+        [server]
+        skip-name-resolve
+        innodb_buffer_pool_size = 128M
+        innodb_buffer_pool_instances = 1
+        innodb_flush_log_at_trx_commit = 2
+        innodb_log_buffer_size = 32M
+        innodb_max_dirty_pages_pct = 90
+        query_cache_type = 1
+        query_cache_limit = 2M
+        query_cache_min_res_unit = 2k
+        query_cache_size = 64M
+        tmp_table_size= 64M
+        max_heap_table_size= 64M
+        slow-query-log = 1
+        slow-query-log-file = /opt/bitnami/mariadb/logs/slow.log
+        long_query_time = 1
+
+        [client-server]
+        #!includedir /etc/mysql/conf.d/
+        #!includedir /etc/mysql/mariadb.conf.d/
+
+        [client]
+        default-character-set = utf8mb4
+
+        [mysqld]
+        character-set-server = utf8mb4
+        collation-server = utf8mb4_general_ci
+        transaction_isolation = READ-COMMITTED
+        binlog_format = ROW
+        innodb_large_prefix=on
+        innodb_file_format=barracuda
+        innodb_file_per_table=1
+        basedir=/opt/bitnami/mariadb
+        port=3306
+        socket=/opt/bitnami/mariadb/tmp/mysql.sock
+        tmpdir=/opt/bitnami/mariadb/tmp
+        max_allowed_packet=16M
+        bind-address=0.0.0.0
+        pid-file=/opt/bitnami/mariadb/tmp/mysqld.pid
+        log-error=/opt/bitnami/mariadb/logs/mysqld.log
+
+## Cronjob to execute Nextcloud background tasks
+## ref: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/background_jobs_configuration.html#cron-jobs
+##
+cronjob:
+  enabled: false
+  # Every 15 minutes
+  # Note: Setting this to any any other value than 15 minutes might
+  #  cause issues with how nextcloud background jobs are executed
+  schedule: "*/15 * * * *"
+  annotations: {}
+  failedJobsHistoryLimit: 5
+  successfulJobsHistoryLimit: 2
+
+## Enable persistence using Persistent Volume Claims
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  enabled: true
+  ## nextcloud data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  existingClaim: nextcloud-data
+  accessMode: ReadWriteOnce
+  size: 48Gi
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 300m
+  limits:
+    memory: 1024Mi
+    cpu: 500m
+
