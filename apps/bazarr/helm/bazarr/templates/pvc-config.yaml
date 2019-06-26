@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "bazarr.fullname" . }}-config
+  labels:
+    app: {{ template "bazarr.name" . }}
+    chart: {{ template "bazarr.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+
+

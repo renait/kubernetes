@@ -1,0 +1,62 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "bazarr.fullname" . }}
+  labels:
+    app: {{ template "bazarr.name" . }}
+    chart: {{ template "bazarr.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "bazarr.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "bazarr.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+{{ toYaml .Values.env | indent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+          - name: bazarr-config
+            mountPath: /config
+          - name: bazarr-movies
+            mountPath: /movies
+          - name: bazarr-tv
+            mountPath: /tv
+      volumes:
+      - name: bazarr-config
+        persistentVolumeClaim:
+          claimName: bazarr-config
+      - name: bazarr-movies
+        persistentVolumeClaim:
+          claimName: lib-movies
+      - name: bazarr-tv
+        persistentVolumeClaim:
+          claimName: lib-movies
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

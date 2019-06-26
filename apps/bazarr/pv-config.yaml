@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: bazarr-config
+  labels:
+    app: bazarr
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/k8s/bazarr-config
+    server: san.explorer
