@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/kubernetes/radarr-config
+    path: /data/k8s/radarr-config
     server: san.explorer
