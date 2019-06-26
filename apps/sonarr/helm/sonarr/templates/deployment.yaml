@@ -36,7 +36,7 @@ spec:
             mountPath: /config
           - name: sonarr-download
             mountPath: /downloads
-          - name: sonarr-mtv
+          - name: sonarr-tv
             mountPath: /tv
       volumes:
       - name: sonarr-config
