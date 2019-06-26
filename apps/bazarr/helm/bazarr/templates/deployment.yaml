@@ -34,18 +34,17 @@ spec:
           volumeMounts:
           - name: bazarr-config
             mountPath: /config
-          - name: bazarr-movies
+          - name: bazarr-video
             mountPath: /movies
-          - name: bazarr-tv
+            subPath: mkv
+          - name: bazarr-video
             mountPath: /tv
+            subPath: tv-series
       volumes:
       - name: bazarr-config
         persistentVolumeClaim:
           claimName: bazarr-config
-      - name: bazarr-movies
-        persistentVolumeClaim:
-          claimName: lib-movies
-      - name: bazarr-tv
+      - name: bazarr-video
         persistentVolumeClaim:
           claimName: lib-movies
     {{- with .Values.nodeSelector }}
