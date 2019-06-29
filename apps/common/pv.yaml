@@ -1,6 +1,19 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  name: lib-media
+spec:
+  capacity:
+    storage: 6Ti
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /data/media
+    server: san.explorer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
   name: lib-movies
 spec:
   capacity:
