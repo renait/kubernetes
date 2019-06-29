@@ -9,10 +9,6 @@ image:
   tag: v1.10.1
   pullPolicy: IfNotPresent
 
-service:
-  type: ClusterIP
-  port: 23423
-
 ingress:
   enabled: true
   annotations:
@@ -46,10 +42,4 @@ resources:
   requests:
     cpu: 500m
     memory: 640Mi
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
 

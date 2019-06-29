@@ -1,8 +1,0 @@
-apiVersion: certmanager.k8s.io/v1alpha1
-kind: Issuer
-metadata:
-  name: ca-kubernetes-issuer
-  namespace: monitoring
-spec:
-  ca:
-    secretName: ca-kubernetes-secret

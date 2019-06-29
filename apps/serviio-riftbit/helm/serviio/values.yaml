@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: riftbit/serviio
-  tag: v1.10.1
+  tag: v1.10.0
   pullPolicy: IfNotPresent
 
 service:

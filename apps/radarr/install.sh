@@ -1,3 +1,3 @@
 #!/bin/bash
 kubectl apply -f pv-config.yaml
-helm upgrade --install radarr explorer/radarr
+helm upgrade --install -f values.yaml radarr explorer/radarr

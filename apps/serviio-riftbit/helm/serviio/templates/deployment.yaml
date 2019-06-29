@@ -28,6 +28,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: serviio.boundAddr
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
 {{ toYaml .Values.env | indent 12 }}
           ports:
             - name: console
@@ -36,6 +40,12 @@ spec:
             - name: browser
               containerPort: 23424
               protocol: TCP
+            - name: webserver
+              containerPort: 8895
+              protocol: TCP
+            - name: upnp
+              containerPort: 1900
+              protocol: UDP
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:

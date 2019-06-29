@@ -11,7 +11,7 @@ Import node
 Configure node from vmconsole
 
 1. Virtual Hardware
-- Mem: 2048
+- Mem: 2048 (minimum)
 - Disk: 32GB
 - Upgrade hardware
 - VMOptions -> VMware tools -> sync time with host
