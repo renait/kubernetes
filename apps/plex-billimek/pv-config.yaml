@@ -12,3 +12,16 @@ spec:
   nfs:
     path: /data/k8s/plex-config
     server: san.explorer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-config
+  labels:
+    app: plex
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
