@@ -10,10 +10,19 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: pms
+      port: {{ .Values.service.port }}
       protocol: TCP
-      name: http
+      targetPort: pms
+{{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
+      nodePort: {{.Values.service.nodePort}}
+{{ end }}
+    - name: http
+      port: 80
+      targetPort: pms
+    - name: https
+      port: 443
+      targetPort: https
   selector:
     app: {{ template "plex.name" . }}
     release: {{ .Release.Name }}

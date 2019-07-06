@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "plex.fullname" . }}
@@ -19,70 +19,94 @@ spec:
         app: {{ template "plex.name" . }}
         release: {{ .Release.Name }}
     spec:
-#      securityContext:
-#        runAsUser: 0
-#        fsGroup: 0
-      hostNetwork: true
+      hostNetwork: {{ .Values.hostNetwork }}
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-{{ toYaml .Values.env | indent 12 }}
-          ports:
-            - name: http
-              containerPort: 32400
-              protocol: TCP
-          livenessProbe: 
-            httpGet: 
-              path: / 
-              port: 32400 
-              scheme: HTTP 
-            initialDelaySeconds: 60 
-            # problems with "connection refused", "use of closed network connection" 
-            # "Increasing the probe timeout to 15 seconds solved this for me, thanks for the suggestion." 
-            # https://github.com/kubernetes/kubernetes/issues/19904 
-            timeoutSeconds: 5 
-            periodSeconds: 30 
-            successThreshold: 1 
-            failureThreshold: 10
-          readinessProbe: 
-            httpGet: 
-              path: / 
-              port: 32400 
-              scheme: HTTP 
-            initialDelaySeconds: 30 
-            # problems with "connection refused", "use of closed network connection" 
-            # "Increasing the probe timeout to 15 seconds solved this for me, thanks for the suggestion." 
-            # https://github.com/kubernetes/kubernetes/issues/19904 
-            timeoutSeconds: 25 
-            periodSeconds: 30 
-            successThreshold: 1 
-            failureThreshold: 10
-          resources:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: TZ
+          value: "{{ .Values.timezone }}"
+        - name: PLEX_CLAIM
+          value: "{{ .Values.plexClaim }}"
+        - name: CHANGE_CONFIG_DIR_OWNERSHIP
+          value: "{{ .Values.changeConfigDirOwnership }}"
+        - name: PLEX_GID
+          value: "{{ .Values.plexGid }}"
+        - name: PLEX_UID
+          value: "{{ .Values.plexUid }}"
+        - name: ALLOWED_NETWORKS
+          value: "{{ .Values.allowedNetworks }}"
+        ports:
+          - name: pms
+            containerPort: 32400
+          - name: https
+            containerPort: 32443
+        livenessProbe:
+          httpGet:
+            path: /identity
+            port: 32400
+            scheme: HTTP
+          initialDelaySeconds: 60
+          # problems with "connection refused", "use of closed network connection"
+          # "Increasing the probe timeout to 15 seconds solved this for me, thanks for the suggestion."
+          # https://github.com/kubernetes/kubernetes/issues/19904
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /identity
+            port: 32400
+            scheme: HTTP
+          initialDelaySeconds: 20
+          timeoutSeconds: 5
+        resources:
 {{ toYaml .Values.resources | indent 12 }}
-          volumeMounts:
-          - name: plex-config
-            mountPath: /config
-          - name: plex-movies
-            mountPath: /data/video
-          - name: plex-pictures
-            mountPath: /data/pictures
-          - name: plex-transcode
-            mountPath: /transcode
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        {{- if .Values.persistence.data.subPath }}
+          subPath: {{ .Values.persistence.data.subPath }}
+        {{ end }}
+        - name: config
+          mountPath: /config
+        {{- if .Values.persistence.config.subPath }}
+          subPath: {{ .Values.persistence.config.subPath }}
+        {{ end }}
+        - name: transcode
+          mountPath: /transcode
+        {{- if .Values.persistence.transcode.subPath }}
+          subPath: {{ .Values.persistence.transcode.subPath }}
+        {{ end }}
+        - name: shared
+          mountPath: /shared
       volumes:
-      - name: plex-config
+      - name: data
         persistentVolumeClaim:
-          claimName: plex-config
-      - name: plex-movies
+{{- if .Values.persistence.data.claimName }}
+          claimName: "{{ .Values.persistence.data.claimName }}"
+{{- else }}
+          claimName: "{{ template "fullname" . }}-data"
+{{- end }}
+      - name: config
         persistentVolumeClaim:
-          claimName: lib-movies
-      - name: plex-pictures
+{{- if .Values.persistence.config.claimName }}
+          claimName: "{{ .Values.persistence.config.claimName }}"
+{{- else }}
+          claimName: "{{ template "fullname" . }}-config"
+{{- end }}
+      - name: transcode
+{{- if .Values.persistence.transcode.enabled }}
         persistentVolumeClaim:
-          claimName: lib-pictures
-      - name: plex-transcode
-        persistentVolumeClaim:
-          claimName: transcode
+{{- if .Values.persistence.transcode.claimName }}
+          claimName: "{{ .Values.persistence.transcode.claimName }}"
+{{- else }}
+          claimName: "{{ template "fullname" . }}-transcode"
+{{- end }}
+{{- else }}
+        emptyDir: {}
+{{- end }}
+      - name: shared
+          emptyDir: {}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

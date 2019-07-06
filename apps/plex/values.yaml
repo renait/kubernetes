@@ -1,24 +1,13 @@
-# Default values for plex.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-replicaCount: 1
-
-image:
-  repository: plexinc/pms-docker
-  tag: plexpass
-  pullPolicy: Always
-
-service:
-  type: ClusterIP
-  port: 32400
+plexClaim: "claim-o7MyPRyywc4AjsRM-Fps"
+changeConfigDirOwnership: false
+plexGid: 10
+plexUid: 200
+allowedNetworks:  "10.244.0.0/16"
 
 ingress:
   enabled: true
   annotations:
     certmanager.k8s.io/issuer: ca-kubernetes-issuer
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
     - plex.explorer
@@ -27,37 +16,27 @@ ingress:
       hosts:
         - plex.explorer
 
-env:
-  - name: TZ
-    value: "Europe/Amsterdam"
-  #- name: PGID
-  - name: PLEX_GID
-    value: "10"
-  #- name: PUID
-  - name: PLEX_UID
-    value: "200"
-  - name: PLEX_CLAIM 
-    value: "claim-gxLuS2cadLYSfrRan1nn"
-  - name: CHANGE_CONFIG_DIR_OWNERSHIP
-    value: "false"
-  - name: ALLOWED_NETWORKS
-    value: "192.168.2.0/24"
-
 resources:
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
+    gpu.intel.com/i915: 1
     cpu: 2000m
     memory: 2048Mi
   requests:
     cpu: 500m
     memory: 768Mi
 
-nodeSelector: {}
+nodeSelector: {
+  gpu-node: "true"
+}
 
-tolerations: []
-
-affinity: {}
-
+persistence:
+  transcode:
+    enabled: true
+    size: 5Gi
+    claimName: transcode
+  data:
+    size: 6Ti
+    claimName: lib-media
+  config:
+    size: 2Gi
+    claimName: plex-config

@@ -9,46 +9,106 @@ image:
   tag: plexpass
   pullPolicy: Always
 
+# Use host network
+hostNetwork: true
+
+# Set the timezone of the plex server
+timezone: "Europe/Amsterdam"
+# Override this with the plex claim token from plex.tv/claim
+plexClaim: ""
+# Change ownership of config directory to the plex user. Defaults to true. If you are certain permissions are already
+# set such that the plex user within the container can read/write data in it's config directory, you can set this to
+# false to speed up the first run of the container.
+changeConfigDirOwnership: true
+# The group id of the plex group created inside the container
+plexGid: 1000
+# The user id of the plex user created inside the container.
+plexUid: 1000
+# IP/netmask entries which allow access to the server without requiring authorization. We recommend you set this only
+# if you do not sign in your server. For example 192.168.1.0/24,172.16.0.0/16 will allow access to the entire
+# 192.168.1.x range and the 172.16.x.x range. Note: If you are using Bridge networking, then localhost will appear to
+# plex as coming from the docker networking gateway which is often 172.16.0.1
+allowedNetworks: ""
+
 service:
   type: ClusterIP
   port: 32400
+  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ##
+  # nodePort:
 
 ingress:
-  enabled: true
-  annotations:
-    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+  enabled: false
+  annotations: []
+    #certmanager.k8s.io/issuer: ca-kubernetes-issuer
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  path: /
-  hosts:
-    - plex.explorer
-  tls:
-    - secretName: plex-tls
-      hosts:
-        - plex.explorer
-
-env:
-  - name: TZ
-    value: "Europe/Amsterdam"
-  - name: PGID
-    value: "10"
-  - name: PUID
-    value: "200"
+  # kubernetes.io/tls-acme: "true"
+  #path: /
+  #hosts:
+  #  - plex.explorer
+  #tls:
+  #  - secretName: plex-tls
+  #    hosts:
+  #      - plex.explorer
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits:
-    cpu: 2000m
-    memory: 2048Mi
-  requests:
-    cpu: 500m
-    memory: 512Mi
+  #limits:
+  #  gpu.intel.com/i915: 1
+  #  cpu: 2000m
+  #  memory: 2048Mi
+  #requests:
+  #  cpu: 500m
+  #  memory: 768Mi
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+persistence:
+  transcode:
+    # Optionally specify claimName to manually override the PVC to be used for
+    # the transcode directory. If claimName is specified, storageClass and size
+    # are ignored.
+    ## claimName: "plex-transcode-pvc"
+    # Optionally specify a storage class to be used for the transcode directory.
+    # If not specified and claimName is not specified, the default storage
+    # class will be used.
+    storageClass: ""
+    # subPath: some-subpath
+    # The requested size of the volume to be used when creating a
+    # PersistentVolumeClaim.
+    size: 20Gi
+  data:
+    # Optionally specify claimName to manually override the PVC to be used for
+    # the data directory. If claimName is specified, storageClass and size are
+    # ignored.
+    ## claimName: "plex-data-pvc"
+    # Optionally specify a storage class to be used for the data directory.
+    # If not specified and claimName is not specified, the default storage
+    # class will be used.
+    storageClass: ""
+    # subPath: some-subpath
+    # The requested size of the volume to be used when creating a
+    # PersistentVolumeClaim.
+    size: 40Gi
+  config:
+    # Optionally specify claimName to manually override the PVC to be used for
+    # the config directory. If claimName is specified, storageClass and size
+    # are ignored.
+    ## claimName: "plex-config-pvc"
+    # Optionally specify a storage class to be used for the config directory.
+    # If not specified and claimName is not specified, the default storage
+    # class will be used.
+    # subPath: some-subpath
+    storageClass: ""
+    # The requested size of the volume to be used when creating a
+    # PersistentVolumeClaim.
+    size: 20Gi
+accessMode: ReadWriteMany
