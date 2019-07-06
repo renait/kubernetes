@@ -48,9 +48,6 @@ spec:
             port: 32400
             scheme: HTTP
           initialDelaySeconds: 60
-          # problems with "connection refused", "use of closed network connection"
-          # "Increasing the probe timeout to 15 seconds solved this for me, thanks for the suggestion."
-          # https://github.com/kubernetes/kubernetes/issues/19904
           timeoutSeconds: 10
         readinessProbe:
           httpGet:
@@ -59,26 +56,38 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 20
           timeoutSeconds: 5
-        resources:
-{{ toYaml .Values.resources | indent 12 }}
         volumeMounts:
         - name: data
           mountPath: /data
-        {{- if .Values.persistence.data.subPath }}
+{{- if .Values.persistence.data.subPath }}
           subPath: {{ .Values.persistence.data.subPath }}
-        {{ end }}
+{{ end }}
         - name: config
           mountPath: /config
-        {{- if .Values.persistence.config.subPath }}
+{{- if .Values.persistence.config.subPath }}
           subPath: {{ .Values.persistence.config.subPath }}
-        {{ end }}
+{{ end }}
         - name: transcode
           mountPath: /transcode
-        {{- if .Values.persistence.transcode.subPath }}
+{{- if .Values.persistence.transcode.subPath }}
           subPath: {{ .Values.persistence.transcode.subPath }}
-        {{ end }}
+{{ end }}
         - name: shared
           mountPath: /shared
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:
@@ -106,16 +115,5 @@ spec:
         emptyDir: {}
 {{- end }}
       - name: shared
-          emptyDir: {}
-    {{- with .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+        emptyDir: {}
+
