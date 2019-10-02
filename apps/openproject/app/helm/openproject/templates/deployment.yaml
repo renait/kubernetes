@@ -50,7 +50,7 @@ spec:
         - name: openproject-logs
           mountPath: /var/log/supervisor
         - name: openproject-data
-          mountPath: /var/db/openproject
+          mountPath: /var/openproject/assets
       volumes:
       - name: openproject-data
       {{- if .Values.persistence.enabled }}
