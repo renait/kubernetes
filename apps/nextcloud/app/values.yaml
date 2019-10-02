@@ -1,8 +1,6 @@
 ## Bitnami nextcloud image version
 ## ref: https://hub.docker.com/r/bitnami/nextcloud/tags/
 ##
-image:
-  tag: 16.0.1-apache
 
 ## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
 ## For Kubernetes v1.7, use 'networking.k8s.io/v1'
@@ -20,14 +18,14 @@ ingress:
   #  ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
     certmanager.k8s.io/issuer: ca-kubernetes-issuer
   #  certmanager.k8s.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/proxy-body-size: "256m"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1G"
   #  nginx.org/proxy-connect-timeout: "30s"
   #  nginx.org/proxy-read-timeout: "20s"
   #  nginx.org/client-max-body-size: "256m"
     nginx.ingress.kubernetes.io/server-snippet: |-
      server_tokens off;
      proxy_hide_header X-Powered-By;
-
+  
      rewrite ^/.well-known/webfinger /public.php?service=webfinger last;
      rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
      rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
@@ -37,22 +35,22 @@ ingress:
      location = /.well-known/caldav {
        return 301 $scheme://$host/remote.php/dav;
      }
-     location = /robots.txt {
-       allow all;
-       log_not_found off;
-       access_log off;
-     }
-     location ~ \.(?:png|html|ttf|ico|jpg|jpeg)$ {
-       try_files $uri /index.php$request_uri;
-       # Optional: Don't log access to other assets
-       access_log off;
-     }
-     location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
-       deny all;
-     }
-     location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
-       deny all;
-     }
+  #   location = /robots.txt {
+  #     allow all;
+  #     log_not_found off;
+  #     access_log off;
+  #   }
+  #   location ~ \.(?:png|html|ttf|ico|jpg|jpeg)$ {
+  #     try_files $uri /index.php$request_uri;
+  #     # Optional: Don't log access to other assets
+  #     access_log off;
+  #   }
+  #   location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+  #     deny all;
+  #   }
+  #   location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+  #     deny all;
+  #   }
 
   tls:
     - secretName: nextcloud-tls

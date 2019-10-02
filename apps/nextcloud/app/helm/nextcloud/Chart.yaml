@@ -1,4 +1,4 @@
-appVersion: 16.0.1
+appVersion: 16.0.5
 description: A file sharing server that puts the control and security of your own
   data back into your hands.
 engine: gotpl
@@ -16,4 +16,4 @@ maintainers:
 name: nextcloud
 sources:
 - https://github.com/nextcloud/docker
-version: 1.3.0
+version: 1.3.2
