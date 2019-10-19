@@ -1,8 +1,8 @@
-plexClaim: "claim-o7MyPRyywc4AjsRM-Fps"
+plexClaim: "claim-yjawvHnL6Se7vLy3Wt-m"
 changeConfigDirOwnership: false
 plexGid: 10
 plexUid: 200
-allowedNetworks:  "10.244.0.0/16"
+allowedNetworks: "10.244.0.0/16"
 
 ingress:
   enabled: true
