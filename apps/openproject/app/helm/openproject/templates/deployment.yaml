@@ -4,16 +4,21 @@ kind: Deployment
 metadata:
   name: {{ template "openproject.fullname" . }}
   labels:
-    app: {{ template "openproject.fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    app.kubernetes.io/name: {{ include "openproject.name" . }}
+    helm.sh/chart: {{ include "nextcloud.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  replicas: 1
-  template:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "openproject.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+    template:
     metadata:
       labels:
-        app: {{ template "openproject.fullname" . }}
+        app.kubernetes.io/name: {{ include "openproject.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
@@ -22,7 +27,7 @@ spec:
       {{- end}}
       {{- end }}
       containers:
-      - name: {{ template "openproject.fullname" . }}
+      - name: {{ .Chart.name }}
         image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         env:

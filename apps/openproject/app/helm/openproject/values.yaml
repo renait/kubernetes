@@ -21,6 +21,9 @@ image:
 ## For Kubernetes v1.7, use 'networking.k8s.io/v1'
 networkPolicyApiVersion: networking.k8s.io/v1
 
+# Number of replicas to be deployed
+replicaCount: 1
+
 ## Allowing use of ingress controllers
 ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ##

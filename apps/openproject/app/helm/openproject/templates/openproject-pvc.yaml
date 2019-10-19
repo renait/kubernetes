@@ -4,6 +4,11 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ template "openproject.fullname" . }}-openproject
+  labels:
+    app.kubernetes.io: {{ include "openproject.name" . }}
+    helm.sh/chart: {{ include "nextcloud.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   accessModes:
     - {{ .Values.persistence.openproject.accessMode | quote }}
