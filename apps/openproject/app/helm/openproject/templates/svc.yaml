@@ -17,4 +17,4 @@ spec:
     port: 80
     targetPort: http
   selector:
-    app.kubernetes.io/name: {{ include "nextcloud.name" . }}
+    app.kubernetes.io/name: {{ include "openproject.name" . }}
