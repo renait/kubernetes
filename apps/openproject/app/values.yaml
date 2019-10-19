@@ -57,11 +57,11 @@ postgresql:
 
   ## These parameters must be specified. They are used to build up the DATABASE_URL env variable
   ## Create a database user
-  postgresUser: openproject
+  postgresqlUsername: openproject
   ## Create a database password
-  postgresPassword: YSo1RoaCZ5
+  postgresqlPassword: YSo1RoaCZ5
   ## Create a database
-  postgresDatabase: openproject
+  postgresqlDatabase: openproject
 
   ## Persist data to a persistent volume
   persistence:
