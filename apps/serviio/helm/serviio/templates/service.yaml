@@ -15,18 +15,17 @@ spec:
       protocol: TCP
       name: console
   selector:
-    app: {{ template "serviio.name" . }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "serviio.name" . }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "serviio.fullname" . }}-browser
   labels:
-    app: {{ template "serviio.name" . }}
-    chart: {{ template "serviio.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "serviio.name" . }}
+    helm.sh/chart: {{ include "serviio.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
