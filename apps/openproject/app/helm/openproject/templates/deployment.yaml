@@ -5,7 +5,7 @@ metadata:
   name: {{ template "openproject.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "openproject.name" . }}
-    helm.sh/chart: {{ include "nextcloud.chart" . }}
+    helm.sh/chart: {{ include "openproject.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
