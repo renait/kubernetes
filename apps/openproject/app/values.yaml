@@ -1,9 +1,6 @@
 ## Bitnami openproject image version
 ## ref: https://hub.docker.com/r/bitnami/openproject/tags/
 ##
-## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
-## For Kubernetes v1.7, use 'networking.k8s.io/v1'
-networkPolicyApiVersion: extensions/v1beta1
 
 ## Allowing use of ingress controllers
 ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -51,19 +48,6 @@ openprojectHost: openproject.explorer
 ## Defaults to a random 10-character alphanumeric string if not set
 ##
 openprojectPassword:
-
-## loadBalancerIP for the openproject Service (optional, cloud specific)
-## ref: http://kubernetes.io/docs/user-guide/services/#type-loadbalancer
-##
-# openprojectLoadBalancerIP:
-
-##
-## External database configuration
-##
-externalDatabase:
-  ## Database URL
-  url:
-  # url: postgres://user:password@host:5432/dbname
 
 postgresql:
   enabled: true

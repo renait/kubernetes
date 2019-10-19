@@ -56,7 +56,7 @@ The following table lists the configurable parameters of the ownCloud chart and 
 | `ingress.servicePort`                | Ingress' backend servicePort              | `http`                                                  |
 | `ingress.annotations`                | An array of service annotations           | `nil`                                                   |
 | `ingress.tls`                        | Ingress TLS configuration                 | `[]`                                                    |
-| `networkPolicyApiVersion`            | The kubernetes network API version        | `extensions/v1beta1`                                    |
+| `networkPolicyApiVersion`            | The kubernetes network API version        | `networking.k8s.io/v1beta1`                                    |
 | `nextcloudHost`                      | ownCloud host to create application URLs  | `nil`                                                   |
 | `nextcloudLoadBalancerIP`            | `loadBalancerIP` for the owncloud Service | `nil`                                                   |
 | `nextcloudUsername`                  | User of the application                   | `user`                                                  |

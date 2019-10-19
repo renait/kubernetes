@@ -1,5 +1,5 @@
 {{- if include "openproject.host" . -}}
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "openproject.fullname" . }}
@@ -28,7 +28,7 @@ spec:
         env:
         {{- if .Values.postgresql.enabled }}
         - name: DATABASE_URL
-          value: postgres://{{ .Values.postgresql.postgresUser }}:{{ .Values.postgresql.postgresPassword }}@{{ template "openproject.postgresql.fullname" . }}:5432/{{ .Values.postgresql.postgresDatabase }}
+          value: postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ template "openproject.postgresql.fullname" . }}:5432/{{ .Values.postgresql.postgresqlDatabase }}
         {{- else }}
         - name: DATABASE_URL
           value: {{ .Values.externalDatabase.url | quote }}

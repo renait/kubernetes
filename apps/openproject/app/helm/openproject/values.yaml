@@ -17,9 +17,9 @@ image:
   # pullSecrets:
   #   - myRegistrKeySecretName
 
-## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
+## For Kubernetes v1.4, v1.5 and v1.6, use 'networking.k8s.io/v1beta1'
 ## For Kubernetes v1.7, use 'networking.k8s.io/v1'
-networkPolicyApiVersion: extensions/v1beta1
+networkPolicyApiVersion: networking.k8s.io/v1
 
 ## Allowing use of ingress controllers
 ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -74,13 +74,15 @@ externalDatabase:
 postgresql:
   enabled: true
 
+  image.tag: 9.6
+
   ## These parameters must be specified. They are used to build up the DATABASE_URL env variable
   ## Create a database user
-  postgresUser: openproject
+  postgresqlUsername: openproject
   ## Create a database password
-  postgresPassword: secret
+  postgresqlPassword: secret
   ## Create a database
-  postgresDatabase: openproject
+  postgresqlDatabase: openproject
 
   ## Persist data to a persistent volume
   persistence:
@@ -102,7 +104,7 @@ postgresql:
     accessMode: ReadWriteOnce
     size: 2Gi
     subPath: "data"
-    mountPath: /var/lib/postgresql/data/pgdata
+    mountPath: /bitnami/postgresql
 
     # annotations: {}
 
