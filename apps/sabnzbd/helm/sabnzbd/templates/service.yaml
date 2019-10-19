@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "sabnzbd.fullname" . }}
   labels:
-    app.kubernetes.io: {{ include "sabnzbd.name" . }}
+    app.kubernetes.io/name: {{ include "sabnzbd.name" . }}
     helm.sh/chart: {{ include "sabnzbd.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -15,4 +15,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io: {{ include "sabnzbd.name" . }}
+    app.kubernetes.io/name: {{ include "sabnzbd.name" . }}

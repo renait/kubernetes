@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ template "radarr.fullname" . }}-config
   labels:
-    app.kubernetes.io: {{ include "radarr.name" . }}
+    app.kubernetes.io/name: {{ include "radarr.name" . }}
     helm.sh/chart: {{ include "radarr.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}

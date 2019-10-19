@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ template "sonarr.fullname" . }}-config
   labels:
-    app.kubernetes.io: {{ include "sonarr.name" . }}
+    app.kubernetes.io/name: {{ include "sonarr.name" . }}
     helm.sh/chart: {{ include "sonarr.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
