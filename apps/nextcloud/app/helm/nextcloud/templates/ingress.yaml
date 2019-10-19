@@ -19,7 +19,7 @@ spec:
       paths:
       - backend:
           serviceName: {{ template "nextcloud.fullname" . }}
-          servicePort: {{ .Values.ingress.servicePort }}
+          servicePort: {{ .Values.service.port }}
 {{- if .Values.ingress.tls }}
   tls:
 {{ toYaml .Values.ingress.tls | indent 4 }}

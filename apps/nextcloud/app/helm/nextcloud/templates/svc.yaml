@@ -8,13 +8,14 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: {{ .Values.serviceType }}
-  {{- if eq .Values.serviceType "LoadBalancer" }}
-  loadBalancerIP: {{ default "" .Values.nextcloudLoadBalancerIP }}
+  type: {{ .Values.service.type }}
+  {{- if eq .Values.service.type "LoadBalancer" }}
+  loadBalancerIP: {{ default "" .Values.service.loadBalancerIP }}
   {{- end }}
   ports:
-  - name: http
-    port: 80
+  - port: {{ .Values.service.port }}
     targetPort: http
+    protocol: TCP
+    name: http
   selector:
     app.kubernetes.io: {{ include "nextcloud.name" . }}
