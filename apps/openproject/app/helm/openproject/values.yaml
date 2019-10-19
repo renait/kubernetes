@@ -70,7 +70,8 @@ externalDatabase:
 postgresql:
   enabled: true
 
-  image.tag: 9.6
+  image:
+    tag: 9.6
 
   ## These parameters must be specified. They are used to build up the DATABASE_URL env variable
   ## Create a database user
