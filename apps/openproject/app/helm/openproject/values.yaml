@@ -88,6 +88,28 @@ postgresql:
   ## Create a database
   postgresqlDatabase: openproject
 
+  postgresqlConfiguration: |-
+    {
+      "listenAddresses", "*",
+      "maxConnections": "100",
+      "sharedBuffers: "128MB",
+      "dynamicSharedMemoryType": "posix",
+      "logTimezone": "UTC",
+      "datestyle": "iso, mdy",
+      "timezone": "UTC",
+      "lcMessages": "en_US.utf8",
+      "lcMonetary": "en_US.utf8",
+      "lcNumeric": "en_US.utf8",
+      "lcTime": "en_US.utf8",
+      "defaultTextSearchConfig": "pc_catalog.english",
+    }
+
+  pgHbaConfiguration: |-
+    local all all trust
+    host all all 127.0.0.1/32 trust
+    host all all ::1/128 trust
+    host all all all md5
+
   ## Persist data to a persistent volume
   persistence:
     enabled: true
