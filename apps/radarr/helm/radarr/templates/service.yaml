@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ template "radarr.fullname" . }}
   labels:
-    app: {{ template "radarr.name" . }}
-    chart: {{ template "radarr.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io: {{ include "radarr.name" . }}
+    helm.sh/chart: {{ include "radarr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,5 +15,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: {{ template "radarr.name" . }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "radarr.name" . }}

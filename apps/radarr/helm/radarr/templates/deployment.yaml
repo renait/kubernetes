@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "radarr.fullname" . }}
   labels:
-    app: {{ template "radarr.name" . }}
-    chart: {{ template "radarr.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "radarr.name" . }}
+    helm.sh/chart: {{ include "radarr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "radarr.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "radarr.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "radarr.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "radarr.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

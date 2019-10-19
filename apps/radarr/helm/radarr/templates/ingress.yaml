@@ -7,10 +7,10 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ template "radarr.name" . }}
-    chart: {{ template "radarr.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io: {{ include "radarr.name" . }}
+    helm.sh/chart: {{ include "radarr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- with .Values.ingress.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
