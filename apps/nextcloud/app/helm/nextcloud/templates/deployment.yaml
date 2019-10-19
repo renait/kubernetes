@@ -4,16 +4,21 @@ kind: Deployment
 metadata:
   name: {{ template "nextcloud.fullname" . }}
   labels:
-    app: {{ template "nextcloud.fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    app.kubernetes.io/name: {{ include "nextcloud.name" . }}
+    helm.sh/chart: {{ include "nextcloud.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "nextcloud.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "nextcloud.fullname" . }}
+        app.kubernetes.io/name: {{ include "nextcloud.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
