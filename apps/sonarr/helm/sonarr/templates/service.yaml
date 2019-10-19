@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ template "sonarr.fullname" . }}
   labels:
-    app: {{ template "sonarr.name" . }}
-    chart: {{ template "sonarr.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io: {{ include "sonarr.name" . }}
+    helm.sh/chart: {{ include "sonarr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,5 +15,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: {{ template "sonarr.name" . }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "sonarr.name" . }}

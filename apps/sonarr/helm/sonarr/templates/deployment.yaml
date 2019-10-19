@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "sonarr.fullname" . }}
   labels:
-    app: {{ template "sonarr.name" . }}
-    chart: {{ template "sonarr.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "sonarr.name" . }}
+    helm.sh/chart: {{ include "sonarr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "sonarr.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "sonarr.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "sonarr.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "sonarr.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

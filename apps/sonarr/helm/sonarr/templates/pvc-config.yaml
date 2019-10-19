@@ -3,15 +3,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ template "sonarr.fullname" . }}-config
   labels:
-    app: {{ template "sonarr.name" . }}
-    chart: {{ template "sonarr.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io: {{ include "sonarr.name" . }}
+    helm.sh/chart: {{ include "sonarr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 100Mi
-
-
