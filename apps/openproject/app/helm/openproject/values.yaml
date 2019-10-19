@@ -120,7 +120,6 @@ postgresql:
     # storageClass: "-"
     accessMode: ReadWriteOnce
     size: 2Gi
-    mountPath: /bitnami/postgresql
 
     # annotations: {}
 
