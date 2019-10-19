@@ -5,10 +5,10 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ $fullName }}
-    chart: {{ template "spotweb.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "spotweb.name" . }}
+    helm.sh/chart: {{ include "spotweb.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.ingress.annotations }}
   annotations:
 {{ toYaml .Values.ingress.annotations | indent 4 }}

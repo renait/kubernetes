@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "spotweb.fullname" . }}
   labels:
-    app: {{ template "spotweb.name" . }}
-    chart: {{ template "spotweb.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "spotweb.name" . }}
+    helm.sh/chart: {{ include "spotweb.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "spotweb.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "spotweb.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "spotweb.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "spotweb.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
       - name: {{ .Chart.Name }}

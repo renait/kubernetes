@@ -3,10 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ template "spotweb.fullname" . }}-mariadb
   labels:
-    app: {{ template "spotweb.name" . }}
-    chart: {{ template "spotweb.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "spotweb.name" . }}
+    helm.sh/chart: {{ include "spotweb.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   accessModes:
     - ReadWriteOnce
