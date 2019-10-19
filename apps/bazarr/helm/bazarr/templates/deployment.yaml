@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "bazarr.fullname" . }}
   labels:
-    app: {{ template "bazarr.name" . }}
-    chart: {{ template "bazarr.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "bazarr.name" . }}
+    helm.sh/chart: {{ include "bazarr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "bazarr.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "bazarr.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "bazarr.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "bazarr.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
