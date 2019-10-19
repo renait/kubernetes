@@ -27,7 +27,7 @@ spec:
       {{- end}}
       {{- end }}
       containers:
-      - name: {{ .Chart.name }}
+      - name: {{ .Chart.Name }}
         image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         env:
