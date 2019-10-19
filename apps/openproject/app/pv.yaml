@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/k8s/openproject/pgsql/9.6
+    path: /data/k8s/openproject/pgsql
     server: san.explorer
 ---
 apiVersion: v1
