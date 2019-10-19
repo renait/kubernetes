@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "plex.fullname" . }}
   labels:
-    app: {{ template "plex.name" . }}
-    chart: {{ template "plex.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "plex.name" . }}
+    helm.sh/chart: {{ include "plex.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "plex.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "plex.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "plex.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "plex.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       hostNetwork: {{ .Values.hostNetwork }}
       containers:

@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ template "plex.fullname" . }}
   labels:
-    app: {{ template "plex.name" . }}
-    chart: {{ template "plex.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "plex.name" . }}
+    helm.sh/chart: {{ include "plex.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -24,5 +24,4 @@ spec:
       port: 443
       targetPort: https
   selector:
-    app: {{ template "plex.name" . }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "plex.name" . }}
