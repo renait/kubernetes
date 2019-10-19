@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ template "serviio.fullname" . }}-console
   labels:
-    app: {{ template "serviio.name" . }}
-    chart: {{ template "serviio.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "serviio.name" . }}
+    helm.sh/chart: {{ include "serviio.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -35,5 +35,4 @@ spec:
       protocol: TCP
       name: browser
   selector:
-    app: {{ template "serviio.name" . }}
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "serviio.name" . }}

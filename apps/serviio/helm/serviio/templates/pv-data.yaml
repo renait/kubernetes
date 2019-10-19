@@ -3,10 +3,10 @@ kind: PersistentVolume
 metadata:
   name: {{ template "serviio.fullname" . }}-data
   labels:
-    app: {{ template "serviio.name" . }}
-    chart: {{ template "serviio.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "serviio.name" . }}
+    helm.sh/chart: {{ include "serviio.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   capacity:
     storage: 2Gi

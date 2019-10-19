@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "serviio.fullname" . }}
   labels:
-    app: {{ template "serviio.name" . }}
-    chart: {{ template "serviio.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "serviio.name" . }}
+    helm.sh/chart: {{ include "serviio.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "serviio.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "serviio.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "serviio.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "serviio.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       securityContext:
         runAsUser: 0
