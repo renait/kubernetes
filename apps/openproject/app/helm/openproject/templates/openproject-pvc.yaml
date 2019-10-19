@@ -5,7 +5,7 @@ apiVersion: v1
 metadata:
   name: {{ template "openproject.fullname" . }}-openproject
   labels:
-    app.kubernetes.io: {{ include "openproject.name" . }}
+    app.kubernetes.io/name: {{ include "openproject.name" . }}
     helm.sh/chart: {{ include "openproject.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
