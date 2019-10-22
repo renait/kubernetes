@@ -121,7 +121,7 @@ Master:
     Annotations:
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
-      certmanager.k8s.io/issuer: ca-kubernetes-issuer
+      cert-manager.io/issuer: ca-kubernetes-issuer
 
     TLS:
     - secretName: jenkins-tls

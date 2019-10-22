@@ -7,7 +7,7 @@ allowedNetworks: "10.244.0.0/16"
 ingress:
   enabled: true
   annotations:
-    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    cert-manager.io/issuer: ca-kubernetes-issuer
   path: /
   hosts:
     - plex.explorer

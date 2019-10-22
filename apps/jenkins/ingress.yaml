@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: jenkins
   annotations:
-    certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    cert-manager.io/issuer: ca-kubernetes-issuer
     kubernetes.io/tls-acme: "true"
 spec:
   tls:

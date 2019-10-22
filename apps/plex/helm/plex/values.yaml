@@ -41,7 +41,7 @@ service:
 ingress:
   enabled: false
   annotations: []
-    #certmanager.k8s.io/issuer: ca-kubernetes-issuer
+    #cert-manager.io/issuer: ca-kubernetes-issuer
     # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   #path: /
