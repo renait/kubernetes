@@ -11,8 +11,8 @@ kubectl create secret tls ca-kubernetes-secret --cert=ca-kubernetes.cert.pem --k
 kubectl create secret tls ca-kubernetes-secret --cert=ca-kubernetes.cert.pem --key=ca-kubernetes.key.pem --namespace kube-system
 kubectl create secret tls ca-kubernetes-secret --cert=ca-kubernetes.cert.pem --key=ca-kubernetes.key.pem --namespace monitoring
 
-sleep 5
-
+# This only after pods have started
+sleep 30
 kubectl -n monitoring apply -f issuer-kubernetes.yaml
 kubectl -n default apply -f issuer-kubernetes.yaml
 kubectl -n kube-system apply -f issuer-kubernetes.yaml
