@@ -1,0 +1,445 @@
+apiVersion: v1
+items:
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Issuer
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"default"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
+    creationTimestamp: "2019-10-21T09:20:36Z"
+    generation: 2
+    name: ca-kubernetes-issuer
+    namespace: default
+    resourceVersion: "14782536"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/issuers/ca-kubernetes-issuer
+    uid: 6c5264de-61fc-42e1-957a-0a1a54b062f8
+  spec:
+    ca:
+      secretName: ca-kubernetes-secret
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-21T09:21:09Z"
+      message: Signing CA verified
+      reason: KeyPairVerified
+      status: "True"
+      type: Ready
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Issuer
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"kube-system"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
+    creationTimestamp: "2019-10-21T09:20:36Z"
+    generation: 2
+    name: ca-kubernetes-issuer
+    namespace: kube-system
+    resourceVersion: "14782537"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/kube-system/issuers/ca-kubernetes-issuer
+    uid: ef56281c-2d36-40fd-b60d-c3ee6b8b0527
+  spec:
+    ca:
+      secretName: ca-kubernetes-secret
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-21T09:21:09Z"
+      message: Signing CA verified
+      reason: KeyPairVerified
+      status: "True"
+      type: Ready
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Issuer
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"monitoring"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
+    creationTimestamp: "2019-10-21T09:20:36Z"
+    generation: 2
+    name: ca-kubernetes-issuer
+    namespace: monitoring
+    resourceVersion: "14782535"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/monitoring/issuers/ca-kubernetes-issuer
+    uid: e65acb91-0f99-49b1-b08b-0987babc20c0
+  spec:
+    ca:
+      secretName: ca-kubernetes-secret
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-21T09:21:09Z"
+      message: Signing CA verified
+      reason: KeyPairVerified
+      status: "True"
+      type: Ready
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-21T09:21:41Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: bazarr
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: bazarr
+      helm.sh/chart: bazarr-0.1.2
+    name: bazarr-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: bazarr
+      uid: 3ca5c7d1-cebc-47df-9e63-dc2e0b6b7ed3
+    resourceVersion: "14782699"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/bazarr-tls
+    uid: 61dc1b58-85e4-487b-a086-6a7aeac8c804
+  spec:
+    dnsNames:
+    - bazarr.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: bazarr-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-21T09:21:41Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2020-01-19T09:21:09Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T21:05:20Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: nextcloud
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: nextcloud
+      helm.sh/chart: nextcloud-1.4.0
+    name: nextcloud-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: nextcloud
+      uid: daf6d58a-4372-4150-ab26-daeea00b7f25
+    resourceVersion: "14464545"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/nextcloud-tls
+    uid: 51c4e469-2cad-49c0-8849-555f90d9d542
+  spec:
+    dnsNames:
+    - nextcloud.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: nextcloud-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T21:05:20Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2020-01-17T15:42:16Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T21:07:57Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: openproject
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: openproject
+      helm.sh/chart: openproject-4.1.0
+    name: openproject-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: openproject
+      uid: 015338b0-b447-4613-8b48-c8976a7cf281
+    resourceVersion: "14465041"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/openproject-tls
+    uid: f4a1854b-ee94-4e3c-a9d1-bdfa04747109
+  spec:
+    dnsNames:
+    - openproject.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: openproject-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T21:07:57Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2020-01-17T12:14:23Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T21:17:07Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: plex
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: plex
+      helm.sh/chart: plex-0.4.1
+    name: plex-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: plex
+      uid: e87a282f-9692-448c-b8ba-95cf7f7ed479
+    resourceVersion: "14466592"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/plex-tls
+    uid: fbee852b-ad12-47eb-ae5f-242aa48ed50f
+  spec:
+    dnsNames:
+    - plex.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: plex-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T21:17:07Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2019-12-31T14:41:02Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T21:10:45Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: radarr
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: radarr
+      helm.sh/chart: radarr-0.1.2
+    name: radarr-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: radarr
+      uid: 5eb90f7a-ecf2-4919-9164-f94c1a997ce7
+    resourceVersion: "14465647"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/radarr-tls
+    uid: 4cead299-a5af-42da-9134-429470ab6571
+  spec:
+    dnsNames:
+    - radarr.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: radarr-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T21:10:45Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2019-12-31T14:41:38Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T21:09:52Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: sabnzbd
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: sabnzbd
+      helm.sh/chart: sabnzbd-0.2.2
+    name: sabnzbd-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: sabnzbd
+      uid: 73bc8074-cbd6-4d68-8df3-150c1a927336
+    resourceVersion: "14465447"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/sabnzbd-tls
+    uid: eddd4e6c-ed32-42db-b202-02a635cae186
+  spec:
+    dnsNames:
+    - sabnzbd.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: sabnzbd-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T21:09:52Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2019-12-31T14:36:01Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T21:33:21Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: serviio
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: serviio
+      helm.sh/chart: serviio-1.1.0
+    name: serviio-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: serviio
+      uid: becc4b70-e05a-459a-9edd-a6a12d92c8a3
+    resourceVersion: "14468937"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/serviio-tls
+    uid: e8d89dea-046f-4557-bb76-286b7534e12e
+  spec:
+    dnsNames:
+    - serviio.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: serviio-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T21:33:21Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2019-12-31T14:42:47Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T21:10:19Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/instance: sonarr
+      app.kubernetes.io/managed-by: Tiller
+      app.kubernetes.io/name: sonarr
+      helm.sh/chart: sonarr-0.1.2
+    name: sonarr-tls
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: sonarr
+      uid: 2f8f780b-ee1a-4c2b-b5c3-0bf98685cba7
+    resourceVersion: "14465542"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/sonarr-tls
+    uid: 0a23ac2d-f084-4bbb-93b7-ea1fd33949cb
+  spec:
+    dnsNames:
+    - sonarr.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: sonarr-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T21:10:19Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2019-12-31T14:41:42Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T12:14:09Z"
+    generation: 2
+    labels:
+      app: kubernetes-dashboard
+      chart: kubernetes-dashboard-1.10.0
+      heritage: Tiller
+      release: k8s-dashboard
+    name: k8s-dashboard-tls
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: k8s-dashboard-kubernetes-dashboard
+      uid: 23285f80-38e1-4693-97f6-7e37b1aa5a65
+    resourceVersion: "14388194"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/kube-system/certificates/k8s-dashboard-tls
+    uid: 2dada3b9-0dfb-4ae5-b90d-5822453e5a82
+  spec:
+    dnsNames:
+    - k8s-dashboard.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: k8s-dashboard-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T12:14:09Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2019-12-31T14:41:02Z"
+- apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2019-10-19T12:14:09Z"
+    generation: 2
+    labels:
+      app: grafana
+      chart: grafana-3.10.2
+      heritage: Tiller
+      release: prometheus-operator
+    name: grafana-tls
+    namespace: monitoring
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: prometheus-operator-grafana
+      uid: 253d93f6-49f2-4f16-bb1f-ce3b6f214f1e
+    resourceVersion: "14388196"
+    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/monitoring/certificates/grafana-tls
+    uid: 07ee71b2-d75d-49c9-b5cc-6e3c77a83605
+  spec:
+    dnsNames:
+    - k8s-grafana.explorer
+    issuerRef:
+      kind: Issuer
+      name: ca-kubernetes-issuer
+    secretName: grafana-tls
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-19T12:14:09Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    notAfter: "2019-12-31T14:41:02Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
