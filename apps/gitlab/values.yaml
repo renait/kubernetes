@@ -43,7 +43,7 @@ global:
   ingress:
     configureCertmanager: true
     annotations:
-      cert-manager.io/issuer: ca-kubernetes-issuer
+      certmanager.k8s.io/issuer: ca-kubernetes-issuer
     enabled: true
     # tls:
     #   enabled: true
