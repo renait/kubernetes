@@ -21,7 +21,7 @@ deployKubeState: True
 global:
   rbacEnable: true
   pspEnable: true
-  
+
   # Reference to one or more secrets to be used when pulling images
   imagePullSecrets: []
   #  - name: "image-pull-secret"
@@ -67,7 +67,7 @@ alertmanager:
     ## Annotations for Alertmanager Ingress
     ##
     annotations:
-      certmanager.k8s.io/issuer: ca-kubernetes-issuer
+      cert-manager.io/issuer: ca-kubernetes-issuer
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
 
@@ -217,7 +217,7 @@ prometheus:
     ## Annotations for Prometheus Ingress
     ##
     annotations:
-      certmanager.k8s.io/issuer: ca-kubernetes-issuer
+      cert-manager.io/issuer: ca-kubernetes-issuer
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
 
@@ -463,7 +463,7 @@ prometheus:
 grafana:
   serverDashboardConfigmaps:
     - custom-dashboards
-  
+
   storageSpec:
     class: ""
     accessMode: "ReadWriteOnce"
@@ -486,10 +486,10 @@ grafana:
   ingress:
     enabled: true
     annotations:
-      certmanager.k8s.io/issuer: ca-kubernetes-issuer
+      cert-manager.io/issuer: ca-kubernetes-issuer
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
-    hosts: 
+    hosts:
       - k8s-grafana.explorer
     tls:
       - secretName: grafana-tls
