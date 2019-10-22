@@ -9,3 +9,4 @@ kubectl delete issuer ca-kubernetes-issuer -n kube-system
 kubectl delete issuer ca-kubernetes-issuer -n monitoring
 kubectl delete issuer ca-kubernetes-issuer -n default
 
+#kubectl label namespace cert-manager certmanager.k8s.io/disable-validation-

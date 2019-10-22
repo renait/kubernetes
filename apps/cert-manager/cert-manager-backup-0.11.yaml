@@ -1,17 +1,17 @@
 apiVersion: v1
 items:
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Issuer
   metadata:
     annotations:
       kubectl.kubernetes.io/last-applied-configuration: |
-        {"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"default"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
+        {"apiVersion":"cert-manager.io/v1alpha2","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"default"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
     creationTimestamp: "2019-10-21T09:20:36Z"
     generation: 2
     name: ca-kubernetes-issuer
     namespace: default
     resourceVersion: "14782536"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/issuers/ca-kubernetes-issuer
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/issuers/ca-kubernetes-issuer
     uid: 6c5264de-61fc-42e1-957a-0a1a54b062f8
   spec:
     ca:
@@ -23,18 +23,18 @@ items:
       reason: KeyPairVerified
       status: "True"
       type: Ready
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Issuer
   metadata:
     annotations:
       kubectl.kubernetes.io/last-applied-configuration: |
-        {"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"kube-system"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
+        {"apiVersion":"cert-manager.io/v1alpha2","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"kube-system"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
     creationTimestamp: "2019-10-21T09:20:36Z"
     generation: 2
     name: ca-kubernetes-issuer
     namespace: kube-system
     resourceVersion: "14782537"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/kube-system/issuers/ca-kubernetes-issuer
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/kube-system/issuers/ca-kubernetes-issuer
     uid: ef56281c-2d36-40fd-b60d-c3ee6b8b0527
   spec:
     ca:
@@ -46,18 +46,18 @@ items:
       reason: KeyPairVerified
       status: "True"
       type: Ready
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Issuer
   metadata:
     annotations:
       kubectl.kubernetes.io/last-applied-configuration: |
-        {"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"monitoring"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
+        {"apiVersion":"cert-manager.io/v1alpha2","kind":"Issuer","metadata":{"annotations":{},"name":"ca-kubernetes-issuer","namespace":"monitoring"},"spec":{"ca":{"secretName":"ca-kubernetes-secret"}}}
     creationTimestamp: "2019-10-21T09:20:36Z"
     generation: 2
     name: ca-kubernetes-issuer
     namespace: monitoring
     resourceVersion: "14782535"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/monitoring/issuers/ca-kubernetes-issuer
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/monitoring/issuers/ca-kubernetes-issuer
     uid: e65acb91-0f99-49b1-b08b-0987babc20c0
   spec:
     ca:
@@ -69,7 +69,7 @@ items:
       reason: KeyPairVerified
       status: "True"
       type: Ready
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-21T09:21:41Z"
@@ -89,7 +89,7 @@ items:
       name: bazarr
       uid: 3ca5c7d1-cebc-47df-9e63-dc2e0b6b7ed3
     resourceVersion: "14782699"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/bazarr-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/bazarr-tls
     uid: 61dc1b58-85e4-487b-a086-6a7aeac8c804
   spec:
     dnsNames:
@@ -106,7 +106,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2020-01-19T09:21:09Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T21:05:20Z"
@@ -126,7 +126,7 @@ items:
       name: nextcloud
       uid: daf6d58a-4372-4150-ab26-daeea00b7f25
     resourceVersion: "14464545"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/nextcloud-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/nextcloud-tls
     uid: 51c4e469-2cad-49c0-8849-555f90d9d542
   spec:
     dnsNames:
@@ -143,7 +143,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2020-01-17T15:42:16Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T21:07:57Z"
@@ -163,7 +163,7 @@ items:
       name: openproject
       uid: 015338b0-b447-4613-8b48-c8976a7cf281
     resourceVersion: "14465041"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/openproject-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/openproject-tls
     uid: f4a1854b-ee94-4e3c-a9d1-bdfa04747109
   spec:
     dnsNames:
@@ -180,7 +180,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2020-01-17T12:14:23Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T21:17:07Z"
@@ -200,7 +200,7 @@ items:
       name: plex
       uid: e87a282f-9692-448c-b8ba-95cf7f7ed479
     resourceVersion: "14466592"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/plex-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/plex-tls
     uid: fbee852b-ad12-47eb-ae5f-242aa48ed50f
   spec:
     dnsNames:
@@ -217,7 +217,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2019-12-31T14:41:02Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T21:10:45Z"
@@ -237,7 +237,7 @@ items:
       name: radarr
       uid: 5eb90f7a-ecf2-4919-9164-f94c1a997ce7
     resourceVersion: "14465647"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/radarr-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/radarr-tls
     uid: 4cead299-a5af-42da-9134-429470ab6571
   spec:
     dnsNames:
@@ -254,7 +254,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2019-12-31T14:41:38Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T21:09:52Z"
@@ -274,7 +274,7 @@ items:
       name: sabnzbd
       uid: 73bc8074-cbd6-4d68-8df3-150c1a927336
     resourceVersion: "14465447"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/sabnzbd-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/sabnzbd-tls
     uid: eddd4e6c-ed32-42db-b202-02a635cae186
   spec:
     dnsNames:
@@ -291,7 +291,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2019-12-31T14:36:01Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T21:33:21Z"
@@ -311,7 +311,7 @@ items:
       name: serviio
       uid: becc4b70-e05a-459a-9edd-a6a12d92c8a3
     resourceVersion: "14468937"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/serviio-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/serviio-tls
     uid: e8d89dea-046f-4557-bb76-286b7534e12e
   spec:
     dnsNames:
@@ -328,7 +328,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2019-12-31T14:42:47Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T21:10:19Z"
@@ -348,7 +348,7 @@ items:
       name: sonarr
       uid: 2f8f780b-ee1a-4c2b-b5c3-0bf98685cba7
     resourceVersion: "14465542"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/sonarr-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/sonarr-tls
     uid: 0a23ac2d-f084-4bbb-93b7-ea1fd33949cb
   spec:
     dnsNames:
@@ -365,7 +365,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2019-12-31T14:41:42Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T12:14:09Z"
@@ -385,7 +385,7 @@ items:
       name: k8s-dashboard-kubernetes-dashboard
       uid: 23285f80-38e1-4693-97f6-7e37b1aa5a65
     resourceVersion: "14388194"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/kube-system/certificates/k8s-dashboard-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/kube-system/certificates/k8s-dashboard-tls
     uid: 2dada3b9-0dfb-4ae5-b90d-5822453e5a82
   spec:
     dnsNames:
@@ -402,7 +402,7 @@ items:
       status: "True"
       type: Ready
     notAfter: "2019-12-31T14:41:02Z"
-- apiVersion: certmanager.k8s.io/v1alpha1
+- apiVersion: cert-manager.io/v1alpha2
   kind: Certificate
   metadata:
     creationTimestamp: "2019-10-19T12:14:09Z"
@@ -422,7 +422,7 @@ items:
       name: prometheus-operator-grafana
       uid: 253d93f6-49f2-4f16-bb1f-ce3b6f214f1e
     resourceVersion: "14388196"
-    selfLink: /apis/certmanager.k8s.io/v1alpha1/namespaces/monitoring/certificates/grafana-tls
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/monitoring/certificates/grafana-tls
     uid: 07ee71b2-d75d-49c9-b5cc-6e3c77a83605
   spec:
     dnsNames:
