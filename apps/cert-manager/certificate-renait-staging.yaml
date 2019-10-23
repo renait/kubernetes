@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: renait-staging
+spec:
+  secretName: renait-staging
+  issuerRef:
+    name: renait-staging
+    kind: Issuer
+  dnsNames:
+  - '*.staging.renait.nl'

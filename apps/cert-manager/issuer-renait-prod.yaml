@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: renait-prod
+spec:
+  acme:
+    email: info@renait.nl
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod-renait-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            email: roelof@rena-it.nl
+            apiKeySecretRef:
+              name: cloudflare-api
+              key: api-key
+          selector:
+            dnsNames:
+            - '*.renait.nl'

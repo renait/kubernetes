@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: renait-prod
+spec:
+  secretName: renait-prod
+  issuerRef:
+    name: renait-prod
+    kind: Issuer
+  dnsNames:
+  - '*.renait.nl'

@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: renait-staging
+spec:
+  acme:
+    email: info@renait.nl
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging-renait-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            email: roelof@rena-it.nl
+            apiKeySecretRef:
+              name: cloudflare-api
+              key: api-key
+          selector:
+            dnsNames:
+            - '*.staging.renait.nl'
