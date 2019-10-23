@@ -16,3 +16,7 @@ sleep 30
 kubectl -n monitoring apply -f issuer-kubernetes.yaml
 kubectl -n default apply -f issuer-kubernetes.yaml
 kubectl -n kube-system apply -f issuer-kubernetes.yaml
+
+kubectl -n default apply -f issuer-renait-prod.yaml
+kubectl -n default apply -f issuer-renait-staging.yaml
+
