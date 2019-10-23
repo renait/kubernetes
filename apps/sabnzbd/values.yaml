@@ -25,11 +25,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - sabnzbd.explorer
+    - sabnzbd.renait.nl
   tls:
-    - secretName: sabnzbd-tls
+    - secretName: renait-prod
       hosts:
-        - sabnzbd.explorer
+        - sabnzbd.renait.nl
 
 env:
   - name: TZ
