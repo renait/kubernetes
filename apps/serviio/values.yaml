@@ -12,15 +12,15 @@ image:
 ingress:
   enabled: true
   annotations:
-    cert-manager.io/issuer: ca-kubernetes-issuer
-    # kubernetes.io/tls-acme: "true"
+    # cert-manager.io/issuer: ca-kubernetes-issuer
+    kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - serviio.explorer
+    - serviio.renait.nl
   tls:
-    - secretName: serviio-tls
+    - secretName: renait-prod
       hosts:
-        - serviio.explorer
+        - serviio.renait.nl
 
 persistence:
   data:

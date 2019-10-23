@@ -12,17 +12,18 @@ ingress:
   enabled: true
   servicePort: http
   annotations:
-    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/ingress.class: nginx
     # ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
-    cert-manager.io/issuer: ca-kubernetes-issuer
+    # cert-manager.io/issuer: ca-kubernetes-issuer
+    kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: "80m"
     nginx.org/proxy-connect-timeout: "30s"
     nginx.org/proxy-read-timeout: "20s"
     nginx.org/client-max-body-size: "80m"
   tls:
-    - secretName: openproject-tls
+    - secretName: renait-prod
       hosts:
-        - openproject.explorer
+        - openproject.renait.nl
 
 env:
   # - name: EMAIL_DELIVERY_METHOD
@@ -45,7 +46,7 @@ env:
 ## openproject host to create application URLs
 ## ref: https://github.com/bitnami/bitnami-docker-openproject#configuration
 ##
-openprojectHost: openproject.explorer
+openprojectHost: openproject.renait.nl
 
 ## Application password
 ## Defaults to a random 10-character alphanumeric string if not set

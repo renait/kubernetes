@@ -19,11 +19,11 @@ ingress:
   annotations:
     # kubernetes.io/ingress.class: nginx
     # ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/24,172.10.0.1"
-  host: spotweb.explorer
+  host: spotweb.renait.nl
   tls:
-    # - secretName: spotweb-tls
+    # - secretName: renait-prod
     #   hosts:
-    #     - spotweb.cluster.local
+    #     - spotweb.renait.nl
 
 ##
 ## MariaDB chart configuration
