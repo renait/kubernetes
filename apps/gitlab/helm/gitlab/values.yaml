@@ -5,9 +5,13 @@
 replicaCount: 1
 
 image:
-  repository: gitlab/gitlab-ce
-  tag: 11.7.5-ce.0
+  repository: gitlab/gitlab-ee
+  tag: latest
   pullPolicy: IfNotPresent
+
+## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
+## For Kubernetes v1.14, use 'networking.k8s.io/v1beta1'
+networkPolicyApiVersion: networking.k8s.io/v1beta1
 
 ## chart defaults to using an ingress for http, but change to LoadBalancer if using you cluster supports it
 service:
@@ -30,10 +34,10 @@ ingress:
   enabled: false
   annotations:
     kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
-    #nginx.ingress.kubernetes.io/proxy-body-size: 512m
-    #nginx.ingress.kubernetes.io/proxy-connect-timeout: 15
-    #nginx.ingress.kubernetes.io/proxy-read-timeout: 600
+    #kubernetes.io/tls-acme: "true"
+    #nginx.ingress.kubernetes.io/proxy-body-size: "512m"
+    #nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
+    #nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
   path: /
   hosts:
     - gitlab.renait.nl
