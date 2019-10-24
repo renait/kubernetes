@@ -1,0 +1,14 @@
+{{ if (.Values.gitlabOmnibusConfiguration) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "gitlab.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "gitlab.name" . }}
+    helm.sh/chart: {{ include "gitlab.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  GITLAB_OMNIBUS_CONFIG: |
+{{ .Values.gitlabOmnibusConfiguration | indent 4 }}
+{{ end }}

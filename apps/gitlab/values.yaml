@@ -41,16 +41,15 @@ ingress:
       hosts:
         - gitlab.renait.nl
 
-env:
-  GITLAB_OMNIBUS_CONFIG: |
-    nginx['listen_port'] = 80;
-    nginx['listen_https'] = false;
-    external_url 'https://gitlab.renait.nl/';
-    gitlab_rails['initial_root_password'] = 'geheim';
-    gitlab_rails['initial_shared_runners_registration_token'] = 'token';
-    gitlab_rails['gitlab_shell_ssh_port'] = 8999
-    gitlab_rails['gitlab_signup_enabled'] = false;
-    gitlab_rails['ldap_enabled'] = false ;
+gitlabOmnibusConfiguration: |-
+  nginx['listen_port'] = 80;
+  nginx['listen_https'] = false;
+  external_url 'https://gitlab.renait.nl/';
+  gitlab_rails['initial_root_password'] = 'geheim';
+  gitlab_rails['initial_shared_runners_registration_token'] = 'token';
+  gitlab_rails['gitlab_shell_ssh_port'] = 8999
+  gitlab_rails['gitlab_signup_enabled'] = false;
+  gitlab_rails['ldap_enabled'] = false ;
 
 ## livenessPort Port of liveness probe endpoint
 livenessPort: http

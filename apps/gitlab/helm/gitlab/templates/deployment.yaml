@@ -28,7 +28,9 @@ spec:
             containerPort: 22
           - name: http
             containerPort: 80
-          env:
+          envFrom:
+            configMapRef:
+              - name: {{ template "gitlab.fullname" . }}
 {{ toYaml .Values.env | indent 12 }}
           livenessProbe:
             httpGet:

@@ -42,7 +42,7 @@ ingress:
     #  hosts:
     #    - gitlab.renait.nl
 
-env: []
+gitlabOmnibusConfiguration:
 
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
