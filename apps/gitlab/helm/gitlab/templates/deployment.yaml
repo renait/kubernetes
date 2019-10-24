@@ -28,9 +28,9 @@ spec:
             containerPort: 22
           - name: http
             containerPort: 80
-          envFrom:
-            configMapRef:
-              - name: {{ template "gitlab.fullname" . }}
+          env:
+            - name: GITLAB_OMNIBUS_CONFIG
+              value: "from_file('/omnibus_config.rb')"
           livenessProbe:
             httpGet:
               path: /help
@@ -63,6 +63,8 @@ spec:
           - name: gitlab-data
             mountPath: /var/log/gitlab
             subPath: logs
+          - name: gitlab-config
+            mountPath: /omnibus_config.rb
       volumes:
         - name: gitlab-data
           {{- if .Values.persistence.enabled }}
@@ -71,6 +73,10 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: gitlab-config
+          configMap:
+            name: {{ template "gitlab.fullname" . }}
+            key: omnibus_config.rb
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
