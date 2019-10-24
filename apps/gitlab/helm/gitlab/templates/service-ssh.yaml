@@ -14,7 +14,7 @@ spec:
       port: {{ .Values.service.ssh.port | int }}
       {{- if  .Values.service.ssh.nodePort }}
       nodePort: {{ .Values.service.ssh.nodePort }}
-      {{- end }
+      {{- end }}
       targetPort: ssh
       protocol: TCP
   selector:
