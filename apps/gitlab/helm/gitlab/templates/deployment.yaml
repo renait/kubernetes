@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "gitlab.fullname" . }}
   labels:
-    app: {{ template "gitlab.name" . }}
-    chart: {{ template "gitlab.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "gitlab.name" . }}
+    helm.sh/chart: {{ include "gitlab.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "gitlab.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "gitlab.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "gitlab.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "gitlab.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -28,6 +28,8 @@ spec:
             containerPort: 22
           - name: http
             containerPort: 80
+          env:
+  {{ toYaml .Values.env | indent 12 }}
           livenessProbe:
             httpGet:
               path: /help
@@ -43,7 +45,7 @@ spec:
             httpGet:
               path: /help
               port: {{ .Values.readinessPort }}
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             timeoutSeconds: 1
             periodSeconds: 10
             successThreshold: 1
@@ -51,22 +53,23 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
-          - name: gitlab-config
+          - name: gitlab-data
             mountPath: /etc/gitlab
+            subPath: config
           - name: gitlab-data
             mountPath: /var/opt/gitlab
-          - name: gitlab-logs
+            subPath: data
+          - name: gitlab-data
             mountPath: /var/log/gitlab
+            subPath: logs
       volumes:
-        - name: gitlab-config
-          persistentVolumeClaim:
-            claimName: gitlab-config
         - name: gitlab-data
+          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: gitlab-data
-        - name: gitlab-logs
-          persistentVolumeClaim:
-            claimName: gitlab-logs
+            claimName: {{ if .Values.persistence.gitlab.existingClaim }}{{ .Values.persistence.gitlab.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-gitlab{{- end }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
