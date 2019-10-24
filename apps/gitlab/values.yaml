@@ -46,6 +46,15 @@ gitlabOmnibusConfiguration: |-
   gitlab_rails['gitlab_signup_enabled'] = false;
   gitlab_rails['ldap_enabled'] = false ;
 
+persistence:
+  enabled: true
+  gitlab:
+    # storageClass: "-"
+    existingClaim: gitlab-data
+
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
 ## livenessPort Port of liveness probe endpoint
 livenessPort: http
 ## readinessPort Port of readiness probe endpoint
