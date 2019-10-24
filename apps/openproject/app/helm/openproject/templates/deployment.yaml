@@ -1,4 +1,3 @@
-{{- if include "openproject.host" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,10 +51,12 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
-        - name: openproject-logs
+        - name: openproject-data
           mountPath: /var/log/supervisor
+          subPath: logs
         - name: openproject-data
           mountPath: /var/openproject/assets
+          subPath: data
       volumes:
       - name: openproject-data
       {{- if .Values.persistence.enabled }}
@@ -64,11 +65,3 @@ spec:
       {{- else }}
         emptyDir: {}
       {{- end }}
-      - name: openproject-logs
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ if .Values.persistence.logs.existingClaim }}{{ .Values.persistence.logs.existingClaim }}{{- else }}{{ template "openproject.fullname" . }}-logs{{- end }}
-      {{- else }}
-        emptyDir: {}
-      {{- end }}
-{{- end -}}

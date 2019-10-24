@@ -41,20 +41,14 @@ host. To configure openproject with the URL of your service:
 {{- else -}}
 1. Get the openproject URL by running:
 
-{{- if eq .Values.serviceType "ClusterIP" }}
+{{- if eq .Values.service.type "ClusterIP" }}
 
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "openproject.fullname" . }}" -o jsonpath="{.items[0].metadata.name}")
   echo http://127.0.0.1:8080/
-  kubectl port-forward $POD_NAME 8080:80
+  kubectl port-forward $POD_NAME 8080:8080
 {{- else }}
 
-  echo http://{{ include "openproject.host" . }}{{ if .Values.openprojectPort }}:{{ .Values.openprojectPort  }}{{ end }}/
-{{- end }}
-
-2. Get your openproject login credentials by running:
-
-  echo User:     {{ .Values.openprojectUsername }}
-  echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "openproject.fullname" . }} -o jsonpath="{.data.openproject-password}" | base64 --decode)
+  echo http://{{ include "openproject.host" . }}/
 {{- end }}
 
 {{- else -}}
@@ -69,9 +63,9 @@ host. To configure openproject to use and external database host:
 
 1. Complete your openproject deployment by running:
 
-{{- if contains "NodePort" .Values.serviceType }}
+{{- if contains "NodePort" .Values.service.type }}
   export APP_HOST=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-{{- else if contains "LoadBalancer" .Values.serviceType }}
+{{- else if contains "LoadBalancer" .Values.service.type }}
 
   NOTE: It may take a few minutes for the LoadBalancer IP to be available.
         Watch the status with: 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "openproject.fullname" . }}'
@@ -86,5 +80,5 @@ host. To configure openproject to use and external database host:
   ## PLEASE UPDATE THE EXTERNAL DATABASE CONNECTION PARAMETERS IN THE FOLLOWING COMMAND AS NEEDED ##
 
   helm upgrade {{ .Release.Name }} stable/openproject \
-    --set penprojectHost=$APP_HOST,serviceType={{ .Values.serviceType }}{{- if not (empty .Values.externalDatabase.url) }},externalDatabase.url={{ .Values.externalDatabase.url }}{{- end }}
+    --set openproject.password=$APP_PASSWORD,openproject.host=$APP_HOST,service.type={{ .Values.service.type }}{{- if not (empty .Values.externalDatabase.url) }},externalDatabase.url={{ .Values.externalDatabase.url }}{{- end }}
 {{- end }}

@@ -14,13 +14,13 @@ metadata:
 {{- end }}
 spec:
   rules:
-  - host: {{ .Values.openprojectHost }}
+  - host: {{ .Values.openproject.host }}
     http:
       paths:
       - path: /
         backend:
           serviceName: {{ template "openproject.fullname" . }}
-          servicePort: {{ .Values.ingress.servicePort }}
+          servicePort: {{ .Values.service.port }}
 {{- if .Values.ingress.tls }}
   tls:
 {{ toYaml .Values.ingress.tls | indent 4 }}

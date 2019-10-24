@@ -27,18 +27,3 @@ spec:
   nfs:
     path: /data/k8s/openproject/data
     server: san.explorer
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: openproject-logs
-  labels:
-    app: openproject
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  nfs:
-    path: /data/k8s/openproject/logs
-    server: san.explorer
