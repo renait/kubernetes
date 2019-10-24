@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitlab-gitlab-ee-config
+  labels:
+    app: gitlab-gitlab-ee
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/k8s/gitlab/config
+    server: san.explorer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitlab-gitlab-ee-data
+  labels:
+    app: gitlab-gitlab-ee
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/k8s/gitlab/data
+    server: san.explorer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitlab-postgresql
+  labels:
+    app: gitlab
+spec:
+  capacity:
+    storage: 12Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/k8s/gitlab/pgsql
+    server: san.explorer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitlab-redis
+  labels:
+    app: gitlab
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /data/k8s/gitlab/redis
+    server: san.explorer
