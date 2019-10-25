@@ -68,9 +68,12 @@ redis:
     existingClaim: gitlab-data
 
 ## livenessPort Port of liveness probe endpoint
-livenessPort: http
+livenessProbe:
+  enabled: false
+
 ## readinessPort Port of readiness probe endpoint
-readinessPort: http
+readinessProbe:
+  enabled: false
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious

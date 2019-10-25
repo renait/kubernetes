@@ -149,6 +149,28 @@ redis:
       memory: 256Mi
       cpu: 100m
 
+livenessProbe:
+  enabled: true
+  port: http
+  settings:
+    # This pod takes a very long time to start up. Be cautious when
+    # lowering this value to avoid Pod death during startup.
+    initialDelaySeconds: 200
+    timeoutSeconds: 1
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 10
+
+readinessProbe:
+  enabled: true
+  port: http
+  settings:
+    initialDelaySeconds: 120
+    timeoutSeconds: 1
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 3
+
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
