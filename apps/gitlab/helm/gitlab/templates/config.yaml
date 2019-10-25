@@ -9,6 +9,14 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-  gitlab_omnibus_config: |
+  GITLAB_OMNIBUS_CONFIG: |
 {{ .Values.gitlabOmnibusConfiguration | indent 4 }}
+  ## DB configuration
+  ##
+  DB_HOST: {{ template "gitlab.postgresql.fullname" . }}
+  DB_USER: {{ .Values.postgresql.postgresUsername | quote }}
+  DB_DATABASE: {{ .Values.postgresql.postgresqlDatabase | quote }}
+  ## Redis configuration
+  ##
+  REDIS_HOST: {{ template "gitlab.redis.fullname" . }}
 {{ end }}

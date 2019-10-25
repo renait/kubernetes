@@ -71,6 +71,73 @@ persistence:
     accessMode: ReadWriteOnce
     size: 8Gi
 
+postgresql:
+  image:
+    # recommended version is 9.6 (used for development and testing by GitLab)
+    tag: 9.6
+
+  ## These parameters must be specified. They are used to build up the DATABASE_URL env variable
+  ## Create a database user
+  postgresqlUsername: gitlab
+  ## Create a database password. Generate default if none given
+  postgresqlPassword:
+  ## Create a database
+  postgresqlDatabase: gitlab
+
+  postgresqlConfiguration:
+    listenAddresses: "'*'"
+    maxConnections: 100
+    sharedBuffers: 128MB
+    dynamicSharedMemoryType: posix
+    defaultTextSearchConfig: "'pc_catalog.english'"
+
+  initdbScriptsConfigMap: |-
+    CREATE EXTENSION pg_trgm;
+
+#  pgHbaConfiguration: |-
+#    local all all trust
+#    host all all 127.0.0.1/32 trust
+#    host all all ::1/128 trust
+#    host all all all md5
+
+  ## Persist data to a persistent volume
+  persistence:
+    enabled: true
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim:
+
+    size: 8Gi
+    subPath: pgsql
+
+    # annotations: {}
+
+  ## Configure resource requests and limits
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
+redis:
+  ## Cluster settings
+  cluster:
+    enabled: false
+
+  persistence:
+    size: 8Gi
+    subPath: redis
+
+  ## Redis Master resource requests and limits
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

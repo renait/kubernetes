@@ -29,11 +29,19 @@ spec:
           - name: http
             containerPort: 80
           env:
-            - name: GITLAB_OMNIBUS_CONFIG
-              valueFrom:
-                configMapKeyRef:
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "gitlab.postgres.fullname" . }}
+                key: postgresql-password
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "gitlab.redis.fullname" . }}
+                key: redis-password
+          envFrom:
+            - configMapRef:
                   name: {{ template "gitlab.fullname" . }}
-                  key: gitlab_omnibus_config
           livenessProbe:
             httpGet:
               path: /help
