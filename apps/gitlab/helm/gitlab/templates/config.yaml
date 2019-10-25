@@ -9,6 +9,6 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-  omnibus_config.rb: |
+  gitlab_omnibus_config: |
 {{ .Values.gitlabOmnibusConfiguration | indent 4 }}
 {{ end }}
