@@ -133,13 +133,16 @@ postgresql:
       cpu: 100m
 
 redis:
+  nameOverride: redis
+
   ## Cluster settings
   cluster:
     enabled: false
 
-  persistence:
-    size: 8Gi
-    subPath: redis
+  master:
+    persistence:
+      size: 8Gi
+      subPath: redis
 
   ## Redis Master resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
