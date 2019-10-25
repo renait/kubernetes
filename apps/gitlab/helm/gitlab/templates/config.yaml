@@ -14,7 +14,7 @@ data:
   ## DB configuration
   ##
   DB_HOST: {{ template "gitlab.postgresql.fullname" . }}
-  DB_USER: {{ .Values.postgresql.postgresUsername | quote }}
+  DB_USER: {{ .Values.postgresql.postgresqlUsername | quote }}
   DB_DATABASE: {{ .Values.postgresql.postgresqlDatabase | quote }}
   ## Redis configuration
   ##
