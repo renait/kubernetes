@@ -55,6 +55,7 @@ spec:
               path: /help
               port: {{ .Values.readinessProbe.port }}
 {{ toYaml .Values.readinessProbe.settings | indent 12 }}
+{{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
