@@ -18,5 +18,5 @@ data:
   DB_DATABASE: {{ .Values.postgresql.postgresqlDatabase | quote }}
   ## Redis configuration
   ##
-  REDIS_HOST: {{ template "gitlab.redis.fullname" . }}
+  REDIS_HOST: {{ template "gitlab.redis.fullname" . }}-master
 {{ end }}

@@ -133,8 +133,6 @@ postgresql:
       cpu: 100m
 
 redis:
-  nameOverride: redis
-
   ## Cluster settings
   cluster:
     enabled: false
