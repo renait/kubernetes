@@ -46,6 +46,12 @@ ingress:
     #  hosts:
     #    - gitlab.renait.nl
 
+# Enter contents of the GITLAB_OMNIBUS_COINFIG env variable
+#gitlabOmnibusConfiguration: |-
+#  nginx['listen_port'] = 80;
+#  nginx['listen_https'] = false;
+#  external_url 'https://gitlab.example.com/';
+#  gitlab_rails['initial_root_password'] = 'geheim';
 gitlabOmnibusConfiguration:
 
 ## Enable persistence using Persistent Volume Claims
@@ -91,8 +97,12 @@ postgresql:
     dynamicSharedMemoryType: posix
     defaultTextSearchConfig: "'pc_catalog.english'"
 
-  initdbScriptsConfigMap: |-
-    CREATE EXTENSION pg_trgm;
+  ## initdb scripts
+  ## Specify dictionary of scripts to be run at first boot
+  ## Alternatively, you can put your scripts under the files/docker-entrypoint-initdb.d directory
+  initdbScripts:
+    gitlab_init_db.sql: |-
+      CREATE EXTENSION pg_trgm;
 
 #  pgHbaConfiguration: |-
 #    local all all trust
