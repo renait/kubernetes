@@ -2,6 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+image:
+  repository: gitlab/gitlab-ee
+  tag: 12.4.0-ee.0
+
 networkPolicyApiVersion: networking.k8s.io/v1beta1
 
 service:
@@ -40,8 +44,8 @@ gitlabOmnibusConfiguration: |-
   nginx['listen_port'] = 80;
   nginx['listen_https'] = false;
   external_url 'https://gitlab.renait.nl/';
-  gitlab_rails['initial_root_password'] = 'geheim';
-  gitlab_rails['initial_shared_runners_registration_token'] = 'token';
+  gitlab_rails['initial_root_password'] = 'S5jWiLJzBiQPFT';
+  gitlab_rails['initial_shared_runners_registration_token'] = 'sqnoiCDU6Ga2HP';
   gitlab_rails['gitlab_shell_ssh_port'] = 30222
   gitlab_rails['gitlab_signup_enabled'] = true;
   postgresql['enable'] = false;
@@ -59,6 +63,9 @@ persistence:
     size: 8Gi
 
 postgresql:
+  postgresqlUsername: postgres
+  postgresqlPassword: SHxhjLh7QZAvNS
+
   persistence:
     existingClaim: gitlab-data
     size: 5Gi
