@@ -67,12 +67,12 @@ postgresql:
   postgresqlPassword: SHxhjLh7QZAvNS
 
   persistence:
-    existingClaim: gitlab-data
+    existingClaim: gitlab-pgsql
     size: 5Gi
 
 redis:
   persistence:
-    existingClaim: gitlab-data
+    existingClaim: gitlab-redis
 
 ## livenessPort Port of liveness probe endpoint
 livenessProbe:
