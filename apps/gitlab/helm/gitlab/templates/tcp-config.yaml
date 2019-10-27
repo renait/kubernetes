@@ -1,0 +1,12 @@
+{{ if (.Values.gitlabOmnibusConfiguration) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-{{ template "gitlab.fullname" . }}-ssh
+  labels:
+    app.kubernetes.io/name: {{ include "gitlab.name" . }}
+    helm.sh/chart: {{ include "gitlab.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  {{ .Values.gitlabOmnibusConfiguration }}: {{ .Release.Namespace }}/{{ template "gitlab.fullname" . }}:ssh

@@ -11,12 +11,16 @@ metadata:
 data:
   GITLAB_OMNIBUS_CONFIG: |
 {{ .Values.gitlabOmnibusConfiguration | indent 4 }}
+{{- if .Values.postgresql.enabled}}
   ## DB configuration
   ##
   DB_HOST: {{ template "gitlab.postgresql.fullname" . }}
   DB_USER: {{ .Values.postgresql.postgresqlUsername | quote }}
   DB_DATABASE: {{ .Values.postgresql.postgresqlDatabase | quote }}
+{{- end }}
+{{- if .Values.redis.enabled}}
   ## Redis configuration
   ##
   REDIS_HOST: {{ template "gitlab.redis.fullname" . }}-master
+  {{- end }}
 {{ end }}
