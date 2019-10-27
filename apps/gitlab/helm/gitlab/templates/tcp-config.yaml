@@ -9,4 +9,4 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-  {{ .Values.gitlabOmnibusConfiguration }}: {{ .Release.Namespace }}/{{ template "gitlab.fullname" . }}:ssh
+  {{ .Values.service.ssh.externalPort }}: {{ .Release.Namespace }}/{{ template "gitlab.fullname" . }}:ssh
