@@ -51,11 +51,11 @@ gitlabOmnibusConfiguration: |-
   prometheus['enable'] = false;
   # manage_storage_directories['manage_etc'] = false;
   # manage_storage_directories['enable'] = false
-  postgresql['enable'] = false;
-  gitlab_rails['db_host'] = ENV['DB_HOST'];
-  gitlab_rails['db_password'] = ENV['DB_PASSWORD'];
-  gitlab_rails['db_username'] = ENV['DB_USER'];
-  gitlab_rails['db_database'] = ENV['DB_DATABASE'];
+  postgresql['enable'] = true;
+  # gitlab_rails['db_host'] = ENV['DB_HOST'];
+  # gitlab_rails['db_password'] = ENV['DB_PASSWORD'];
+  # gitlab_rails['db_username'] = ENV['DB_USER'];
+  # gitlab_rails['db_database'] = ENV['DB_DATABASE'];
   redis['enable'] = true;
   # gitlab_rails['redis_host'] = ENV['REDIS_HOST'];
   # gitlab_rails['redis_password'] = ENV['REDIS_PASSWORD'];
