@@ -49,14 +49,14 @@ spec:
 {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
-              path: /help
+              path: /-/liveness
               port: {{ .Values.livenessProbe.port }}
 {{ toYaml .Values.livenessProbe.settings | indent 12 }}
 {{- end }}
 {{- if .Values.readinessProbe.enabled}}
           readinessProbe:
             httpGet:
-              path: /help
+              path: /-/readiness
               port: {{ .Values.readinessProbe.port }}
 {{ toYaml .Values.readinessProbe.settings | indent 12 }}
 {{- end }}

@@ -69,11 +69,11 @@ persistence:
 
 ## livenessPort Port of liveness probe endpoint
 livenessProbe:
-  enabled: false
+  enabled: true
 
 ## readinessPort Port of readiness probe endpoint
 readinessProbe:
-  enabled: false
+  enabled: true
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
