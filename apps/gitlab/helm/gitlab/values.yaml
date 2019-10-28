@@ -76,7 +76,7 @@ gitlabOmnibusConfiguration:
 ##
 persistence:
   enabled: true
-  gitlab:
+  gitlab-data:
     ## openproject data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -89,10 +89,46 @@ persistence:
     ## A manually managed Persistent Volume and Claim
     ## Requires persistence.enabled: true
     ## If defined, PVC must be created manually before volume will be bound
-    # existingClaim:
+    # existingClaim: gitlab-data
 
     accessMode: ReadWriteOnce
     size: 8Gi
+
+  gitlab-config:
+    ## openproject data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim: gitlab-config
+
+    accessMode: ReadWriteOnce
+    size: 1Gi
+
+  gitlab-logs:
+    ## openproject data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim: gitlab-logs
+
+    accessMode: ReadWriteOnce
+    size: 2Gi
 
 postgresql:
   # Set to true to use external postgresql db

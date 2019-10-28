@@ -28,35 +28,35 @@ spec:
 #    lun: 0
 #    fsType: 'ext4'
 #    readOnly: false
-#---
-#apiVersion: v1
-#kind: PersistentVolume
-#metadata:
-#  name: gitlab-pgsql
-#spec:
-#  capacity:
-#    storage: 10Gi
-#  accessModes:
-#    - ReadWriteOnce
-#  iscsi:
-#    targetPortal: 172.16.0.11:3260
-#    iqn: iqn.2019-10.explorer.san:gitlab-data
-#    lun: 1
-#    fsType: 'ext4'
-#    readOnly: false
-#---
-#apiVersion: v1
-#kind: PersistentVolume
-#metadata:
-#  name: gitlab-redis
-#spec:
-#  capacity:
-#    storage: 5Gi
-#  accessModes:
-#    - ReadWriteOnce
-#  iscsi:
-#    targetPortal: 172.16.0.11:3260
-#    iqn: iqn.2019-10.explorer.san:gitlab-data
-#    lun: 2
-#    fsType: 'ext4'
-#    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitlab-config
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  iscsi:
+    targetPortal: 172.16.0.11:3260
+    iqn: iqn.2019-10.explorer.san:gitlab-config
+    lun: 1
+    fsType: 'ext4'
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gitlab-logs
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  iscsi:
+    targetPortal: 172.16.0.11:3260
+    iqn: iqn.2019-10.explorer.san:gitlab-logs
+    lun: 2
+    fsType: 'ext4'
+    readOnly: false

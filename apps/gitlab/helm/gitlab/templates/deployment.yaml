@@ -63,20 +63,58 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
-          - name: gitlab-data
+          - name: gitlab-config
             mountPath: /etc/gitlab
             subPath: config
+          - name: gitlab-logs
+            mountPath: /var/log/gitlab
+            subPath: logs
           - name: gitlab-data
             mountPath: /var/opt/gitlab
             subPath: data
           - name: gitlab-data
-            mountPath: /var/log/gitlab
-            subPath: logs
+            mountPath: /var/opt/gitlab/git-data
+            subPath: data/git-data
+          - name: gitlab-data
+            mountPath: /var/opt/gitlab/git-data/repositories
+            subPath: data/git-data/repositories
+          - name: gitlab-data
+            mountPath: /var/opt/gitlab/gitlab-rails/shared
+            subPath: data/gitlab-rails/shared
+          - name: gitlab-data
+            mountPath: /var/opt/gitlab/gitlab-rails/shared/artifacts
+            subPath: data/gitlab-rails/shared/artifacts
+          - name: gitlab-data
+            mountPath: /var/opt/gitlab/gitlab-rails/shared/lfs-objects
+            subPath: data/gitlab-rails/shared/lfs-objects
+          - name: gitlab-data
+            mountPath: /var/opt/gitlab/gitlab-rails/shared/pages
+            subPath: data/gitlab-rails/shared/pages
+          - name: gitlab-data
+            mountPath: /var/opt/gitlab/gitlab-rails/uploads
+            subPath: data/gitlab-rails/uploads
+          - name: gitlab-data
+            mountPath: /var/opt/gitlab/gitlab-ci/builds
+            subPath: data/gitlab-ci/builds
       volumes:
         - name: gitlab-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.gitlab.existingClaim }}{{ .Values.persistence.gitlab.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-gitlab{{- end }}
+            claimName: {{ if .Values.persistence.gitlab-data.existingClaim }}{{ .Values.persistence.gitlab-data.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-data{{- end }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: gitlab-config
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.gitlab-config.existingClaim }}{{ .Values.persistence.gitlab-config.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-config{{- end }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: gitlab-logs
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.gitlab-logs.existingClaim }}{{ .Values.persistence.gitlab-logs.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-logs{{- end }}
           {{- else }}
           emptyDir: {}
           {{- end }}

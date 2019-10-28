@@ -1,0 +1,26 @@
+{{- if .Values.persistence.enabled -}}
+{{- if not .Values.persistence.gitlab-config.existingClaim -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "gitlab.fullname" . }}-config
+  labels:
+    app.kubernetes.io/name: {{ include "gitlab.name" . }}
+    helm.sh/chart: {{ include "gitlab.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.gitlab-config.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.gitlab-config.size | quote }}
+{{- if .Values.persistence.gitlab-config.storageClass }}
+{{- if (eq "-" .Values.persistence.gitlab-config.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.gitlab-config.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end -}}
+{{- end -}}
