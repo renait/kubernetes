@@ -1,5 +1,5 @@
 {{- if .Values.persistence.enabled -}}
-{{- if not .Values.persistence.gitlab-data.existingClaim -}}
+{{- if not .Values.persistence.data.existingClaim -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -11,15 +11,15 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   accessModes:
-    - {{ .Values.persistence.gitlab-data.accessMode | quote }}
+    - {{ .Values.persistence.data.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.gitlab-data.size | quote }}
-{{- if .Values.persistence.gitlab-data.storageClass }}
-{{- if (eq "-" .Values.persistence.gitlab-data.storageClass) }}
+      storage: {{ .Values.persistence.data.size | quote }}
+{{- if .Values.persistence.data.storageClass }}
+{{- if (eq "-" .Values.persistence.data.storageClass) }}
   storageClassName: ""
 {{- else }}
-  storageClassName: "{{ .Values.persistence.gitlab-data.storageClass }}"
+  storageClassName: "{{ .Values.persistence.data.storageClass }}"
 {{- end }}
 {{- end }}
 {{- end -}}

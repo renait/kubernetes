@@ -61,13 +61,13 @@ gitlabOmnibusConfiguration: |-
   # gitlab_rails['redis_password'] = ENV['REDIS_PASSWORD'];
 
 persistence:
-  gitlab-data:
+  data:
     existingClaim: gitlab-data
 
-  gitlab-config:
+  config:
     existingClaim: gitlab-config
 
-  gitlab-logs:
+  logs:
     existingClaim: gitlab-logs
 
 postgresql:

@@ -76,7 +76,7 @@ gitlabOmnibusConfiguration:
 ##
 persistence:
   enabled: true
-  gitlab-data:
+  data:
     ## openproject data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -94,7 +94,7 @@ persistence:
     accessMode: ReadWriteOnce
     size: 8Gi
 
-  gitlab-config:
+  config:
     ## openproject data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -112,7 +112,7 @@ persistence:
     accessMode: ReadWriteOnce
     size: 1Gi
 
-  gitlab-logs:
+  logs:
     ## openproject data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
