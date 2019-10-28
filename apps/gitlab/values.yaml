@@ -49,7 +49,7 @@ gitlabOmnibusConfiguration: |-
   gitlab_rails['gitlab_signup_enabled'] = true;
   grafana['enable'] = false;
   prometheus['enable'] = false;
-  manage_storage_directories['manage_etc'] = false;
+  # manage_storage_directories['manage_etc'] = false;
   # manage_storage_directories['enable'] = false
   postgresql['enable'] = false;
   gitlab_rails['db_host'] = ENV['DB_HOST'];
@@ -63,9 +63,6 @@ gitlabOmnibusConfiguration: |-
 persistence:
   data:
     existingClaim: gitlab-data
-
-  config:
-    existingClaim: gitlab-config
 
   logs:
     existingClaim: gitlab-logs
