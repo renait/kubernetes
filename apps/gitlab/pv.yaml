@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    path: /data/k8s/gitlab-data
+    path: /data/k8s/gitlab
     server: san.explorer
 ---
 apiVersion: v1
@@ -24,7 +24,7 @@ spec:
     - ReadWriteOnce
   iscsi:
     targetPortal: 172.16.0.11:3260
-    iqn: iqn.2019-10.explorer.san:gitlab-data
+    iqn: iqn.2019-10.explorer.san:gitlab
     lun: 0
     fsType: 'ext4'
     readOnly: false
