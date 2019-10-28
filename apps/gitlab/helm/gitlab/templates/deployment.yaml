@@ -100,21 +100,21 @@ spec:
         - name: gitlab-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.gitlab-data.existingClaim }}{{ .Values.persistence.gitlab-data.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-data{{- end }}
+            claimName: {{ if .Values.persistence.data.existingClaim }}{{ .Values.persistence.data.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-data{{- end }}
           {{- else }}
           emptyDir: {}
           {{- end }}
         - name: gitlab-config
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.gitlab-config.existingClaim }}{{ .Values.persistence.gitlab-config.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-config{{- end }}
+            claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-config{{- end }}
           {{- else }}
           emptyDir: {}
           {{- end }}
         - name: gitlab-logs
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.gitlab-logs.existingClaim }}{{ .Values.persistence.gitlab-logs.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-logs{{- end }}
+            claimName: {{ if .Values.persistence.logs.existingClaim }}{{ .Values.persistence.logs.existingClaim }}{{- else }}{{ template "gitlab.fullname" . }}-logs{{- end }}
           {{- else }}
           emptyDir: {}
           {{- end }}
