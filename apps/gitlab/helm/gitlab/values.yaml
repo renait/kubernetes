@@ -131,7 +131,7 @@ postgresql:
   postgresqlConfiguration:
     listenAddresses: "'*'"
     maxConnections: 100
-    sharedBuffers: 128MB
+    sharedBuffers: 256MB
     dynamicSharedMemoryType: posix
     defaultTextSearchConfig: "'pc_catalog.english'"
 
@@ -139,7 +139,7 @@ postgresql:
   ## Specify dictionary of scripts to be run at first boot
   ## Alternatively, you can put your scripts under the files/docker-entrypoint-initdb.d directory
   initdbScripts:
-    01-add-ext-trgm.sql: |
+    01-create-ext-trgm.sql: |
       CREATE EXTENSION pg_trgm;
 
 #  pgHbaConfiguration: |-
@@ -180,6 +180,11 @@ redis:
 
   master:
     persistence:
+      enabled: true
+      ## A manually managed Persistent Volume and Claim
+      ## Requires persistence.enabled: true
+      ## If defined, PVC must be created manually before volume will be bound
+      # existingClaim:
       size: 8Gi
       subPath: redis
 

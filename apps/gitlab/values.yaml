@@ -67,29 +67,6 @@ persistence:
   logs:
     existingClaim: gitlab-logs
 
-postgresql:
-  enabled: true
-  postgresqlUsername: postgres
-  postgresqlPassword: SHxhjLh7QZAvNS
-
-  persistence:
-    existingClaim: gitlab-data
-
-  master:
-    nodeSelector: {
-      kubernetes.io/hostname: k8s-n3
-    }
-
-redis:
-  enabled: false
-  persistence:
-    existingClaim: gitlab-data
-
-  master:
-    nodeSelector: {
-      kubernetes.io/hostname: k8s-n3
-    }
-
 ## livenessPort Port of liveness probe endpoint
 livenessProbe:
   enabled: false

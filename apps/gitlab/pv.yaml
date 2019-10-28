@@ -8,26 +8,10 @@ spec:
   capacity:
     storage: 20Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   nfs:
     path: /data/k8s/gitlab-data
     server: san.explorer
----
-#apiVersion: v1
-#kind: PersistentVolume
-#metadata:
-#  name: gitlab-data
-#spec:
-#  capacity:
-#    storage: 20Gi
-#  accessModes:
-#    - ReadWriteOnce
-#  iscsi:
-#    targetPortal: 172.16.0.11:3260
-#    iqn: iqn.2019-10.explorer.san:gitlab-data
-#    lun: 0
-#    fsType: 'ext4'
-#    readOnly: false
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -41,6 +25,6 @@ spec:
   iscsi:
     targetPortal: 172.16.0.11:3260
     iqn: iqn.2019-10.explorer.san:gitlab-data
-    lun: 2
+    lun: 0
     fsType: 'ext4'
     readOnly: false
