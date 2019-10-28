@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: gitlab/gitlab-ee
-  tag: latest
+  tag: 12.4.0-ee.0
   pullPolicy: IfNotPresent
 
 ## For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
@@ -139,7 +139,7 @@ postgresql:
   ## Specify dictionary of scripts to be run at first boot
   ## Alternatively, you can put your scripts under the files/docker-entrypoint-initdb.d directory
   initdbScripts:
-    gitlab_init_db.sql: |-
+    01-add-ext-trgm.sql: |
       CREATE EXTENSION pg_trgm;
 
 #  pgHbaConfiguration: |-
