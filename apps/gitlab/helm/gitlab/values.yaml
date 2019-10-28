@@ -140,7 +140,7 @@ postgresql:
   ## Alternatively, you can put your scripts under the files/docker-entrypoint-initdb.d directory
   initdbScripts:
     01-create-ext-trgm.sql: |
-      CREATE EXTENSION pg_trgm;
+      CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 #  pgHbaConfiguration: |-
 #    local all all trust
